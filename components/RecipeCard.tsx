@@ -11,15 +11,15 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
   const slug = titleToSlug(recipe.title)
 
   return (
-    <Link href={`/resepi/${slug}`} className="group">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
-        <div className="aspect-video relative overflow-hidden">
+    <Link href={`/resepi/${slug}`} className="group block w-80 h-96 mx-auto">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 h-full flex flex-col">
+        <div className="h-48 relative overflow-hidden flex-shrink-0">
           {recipe.thumbnail_url ? (
             <Image
               src={recipe.thumbnail_url}
               alt={recipe.title}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-200"
+              className="object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
@@ -41,16 +41,10 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           )}
         </div>
         
-        <div className="p-4">
-          <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+        <div className="p-4 flex-1 flex flex-col">
+          <h3 className="font-semibold text-base text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
             {recipe.title}
           </h3>
-          
-          {recipe.description && (
-            <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-              {recipe.description}
-            </p>
-          )}
           
           <div className="flex items-center justify-between text-sm text-gray-500">
             <div className="flex items-center space-x-4">
@@ -87,7 +81,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           </div>
           
           {recipe.tags && recipe.tags.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1">
+            <div className="mt-auto pt-3 flex flex-wrap gap-1">
               {recipe.tags.slice(0, 3).map((tag, index) => (
                 <span
                   key={index}
