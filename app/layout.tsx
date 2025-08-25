@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Resepi Khairul Aming",
   description: "Koleksi resepi masakan Malaysia dari Khairul Aming",
+  other: {
+    "apple-mobile-web-app-title": "Resepi KA",
+  },
 };
 
 export default function RootLayout({
