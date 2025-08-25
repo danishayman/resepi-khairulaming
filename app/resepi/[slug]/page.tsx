@@ -359,7 +359,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
           {/* Source Link */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Sumber</h3>
             <a
               href={recipe.source_url}
               target="_blank"
@@ -369,24 +368,8 @@ export default async function RecipePage({ params }: RecipePageProps) {
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
-              Lihat di TikTok
+              Tengok kat TikTok
             </a>
-          </div>
-
-          {/* Recipe Meta Info */}
-          <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
-            <h4 className="font-semibold text-gray-900 mb-2">Maklumat Resepi</h4>
-            <div className="space-y-1">
-              {recipe.language && (
-                <div>Bahasa: {recipe.language.toUpperCase()}</div>
-              )}
-              {recipe.video_platform && (
-                <div>Platform: {recipe.video_platform}</div>
-              )}
-              {recipe.created_at && (
-                <div>Ditambah: {new Date(recipe.created_at).toLocaleDateString('ms-MY')}</div>
-              )}
-            </div>
           </div>
         </div>
       </div>
