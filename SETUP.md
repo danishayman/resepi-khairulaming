@@ -26,6 +26,17 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 
 You can insert the sample data from `sample-data.json` into your Supabase `recipes` table using the Supabase dashboard or API.
 
+**Note:** The ingredients and instructions fields support flexible JSON structures:
+
+**Ingredients:**
+- Simple arrays: `["ingredient 1", "ingredient 2"]`
+- Categorized objects: `{"main_ingredients": [{"name": "Chicken", "quantity": "1kg"}], "spices": [...]}`
+
+**Instructions:**
+- Simple arrays: `["Step 1 description", "Step 2 description"]`
+- Step-based objects: `{"step1": "First step", "step2": "Second step", ...}`
+- Categorized objects: `{"preparation": ["step1", "step2"], "cooking": ["step1", "step2"]}`
+
 ### 5. Run Development Server
 
 ```bash

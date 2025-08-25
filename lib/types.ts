@@ -11,8 +11,8 @@ export interface Recipe {
   cook_time_minutes: number | null
   total_time_minutes: number | null
   servings: number | null
-  ingredients: (string | { name?: string; amount?: string; unit?: string; [key: string]: unknown })[] // JSONB array
-  instructions: (string | { step?: string; text?: string; [key: string]: unknown })[] // JSONB array
+  ingredients: any // JSONB - can be array or object with categories like {main_ingredients: [], spices_and_seasonings: []}
+  instructions: any // JSONB - can be array or object with categories
   nutrition_info: Record<string, string | number> | null // JSONB object
   tags: string[] | null
   transcript: string | null

@@ -11,27 +11,32 @@
     "cook_time_minutes": 45,
     "total_time_minutes": 65,
     "servings": 4,
-    "ingredients": [
-      "1 ekor ayam dipotong 8 bahagian",
-      "2 biji bawang besar dipotong",
-      "4 ulas bawang putih dicantas",
-      "2 sudu besar sos tiram",
-      "1 sudu besar kicap manis",
-      "1 tin tomato",
-      "Garam dan gula secukup rasa",
-      "Minyak untuk menumis"
-    ],
-    "instructions": [
-      "Panaskan minyak dalam kuali dan tumis bawang besar hingga naik bau",
-      "Masukkan bawang putih dan tumis sebentar",
-      "Masukkan ayam dan masak hingga berubah warna",
-      "Tambahkan sos tiram dan kicap manis, gaul rata",
-      "Masukkan tomato tin dan hancurkan",
-      "Tambah air secukupnya dan biarkan mendidih",
-      "Kecilkan api dan masak selama 30-40 minit hingga ayam empuk",
-      "Perasakan dengan garam dan gula",
-      "Siap untuk dihidangkan dengan nasi putih"
-    ],
+    "ingredients": {
+      "main_ingredients": [
+        {"name": "Ayam", "quantity": "1 ekor dipotong 8 bahagian"},
+        {"name": "Bawang Besar", "quantity": "2 biji dipotong"},
+        {"name": "Bawang Putih", "quantity": "4 ulas dicantas"},
+        {"name": "Tomato Tin", "quantity": "1 tin"}
+      ],
+      "seasonings": [
+        {"name": "Sos Tiram", "quantity": "2 sudu besar"},
+        {"name": "Kicap Manis", "quantity": "1 sudu besar"},
+        {"name": "Garam", "quantity": "secukup rasa"},
+        {"name": "Gula", "quantity": "secukup rasa"},
+        {"name": "Minyak", "quantity": "untuk menumis"}
+      ]
+    },
+    "instructions": {
+      "step1": "Panaskan minyak dalam kuali dan tumis bawang besar hingga naik bau",
+      "step2": "Masukkan bawang putih dan tumis sebentar",
+      "step3": "Masukkan ayam dan masak hingga berubah warna",
+      "step4": "Tambahkan sos tiram dan kicap manis, gaul rata",
+      "step5": "Masukkan tomato tin dan hancurkan",
+      "step6": "Tambah air secukupnya dan biarkan mendidih",
+      "step7": "Kecilkan api dan masak selama 30-40 minit hingga ayam empuk",
+      "step8": "Perasakan dengan garam dan gula",
+      "step9": "Siap untuk dihidangkan dengan nasi putih"
+    },
     "nutrition_info": {
       "calories": "380",
       "protein": "35g",
@@ -53,26 +58,31 @@
     "cook_time_minutes": 120,
     "total_time_minutes": 150,
     "servings": 6,
-    "ingredients": [
-      "1kg daging lembu dipotong dadu",
-      "400ml santan pekat",
-      "200ml santan cair",
-      "3 batang serai diketuk",
-      "4 helai daun limau purut",
-      "2 helai daun kunyit",
-      "Garam dan gula secukup rasa"
-    ],
-    "instructions": [
-      "Tumis rempah rendang hingga wangi dan berminyak",
-      "Masukkan daging dan gaul hingga rata dengan rempah",
-      "Tuang santan cair dan masak dengan api sederhana",
-      "Tambahkan serai, daun limau purut dan daun kunyit",
-      "Masak sambil dikacau sesekali selama 1 jam",
-      "Tuang santan pekat dan teruskan memasak",
-      "Masak hingga kuah menjadi pekat dan berminyak",
-      "Perasakan dengan garam dan gula",
-      "Siap untuk dihidangkan"
-    ],
+    "ingredients": {
+      "main_ingredients": [
+        {"name": "Daging Lembu", "quantity": "1kg dipotong dadu"},
+        {"name": "Santan Pekat", "quantity": "400ml"},
+        {"name": "Santan Cair", "quantity": "200ml"}
+      ],
+      "herbs_and_spices": [
+        {"name": "Serai", "quantity": "3 batang diketuk"},
+        {"name": "Daun Limau Purut", "quantity": "4 helai"},
+        {"name": "Daun Kunyit", "quantity": "2 helai"},
+        {"name": "Garam", "quantity": "secukup rasa"},
+        {"name": "Gula", "quantity": "secukup rasa"}
+      ]
+    },
+    "instructions": {
+      "step1": "Tumis rempah rendang hingga wangi dan berminyak",
+      "step2": "Masukkan daging dan gaul hingga rata dengan rempah",
+      "step3": "Tuang santan cair dan masak dengan api sederhana",
+      "step4": "Tambahkan serai, daun limau purut dan daun kunyit",
+      "step5": "Masak sambil dikacau sesekali selama 1 jam",
+      "step6": "Tuang santan pekat dan teruskan memasak",
+      "step7": "Masak hingga kuah menjadi pekat dan berminyak",
+      "step8": "Perasakan dengan garam dan gula",
+      "step9": "Siap untuk dihidangkan"
+    },
     "nutrition_info": {
       "calories": "520",
       "protein": "42g",
@@ -94,27 +104,31 @@
     "cook_time_minutes": 35,
     "total_time_minutes": 60,
     "servings": 4,
-    "ingredients": [
-      "2 cawan beras",
-      "1 cawan santan",
-      "2 helai daun pandan",
-      "1 sudu teh garam",
-      "Ikan bilis goreng",
-      "Kacang tanah goreng",
-      "Telur rebus",
-      "Timun hirisan"
-    ],
-    "instructions": [
-      "Basuh beras hingga bersih",
-      "Masukkan beras, santan, daun pandan dan garam ke dalam periuk nasi",
-      "Masak seperti biasa hingga nasi masak",
-      "Sementara itu, sediakan lauk-pauk",
-      "Goreng ikan bilis hingga garing",
-      "Goreng kacang tanah hingga keperangan",
-      "Rebus telur dan potong separuh",
-      "Hiris timun nipis-nipis",
-      "Hidangkan nasi lemak dengan sambal dan lauk-pauk"
-    ],
+    "ingredients": {
+      "rice": [
+        {"name": "Beras", "quantity": "2 cawan"},
+        {"name": "Santan", "quantity": "1 cawan"},
+        {"name": "Daun Pandan", "quantity": "2 helai"},
+        {"name": "Garam", "quantity": "1 sudu teh"}
+      ],
+      "accompaniments": [
+        {"name": "Ikan Bilis Goreng", "quantity": "secukupnya"},
+        {"name": "Kacang Tanah Goreng", "quantity": "secukupnya"},
+        {"name": "Telur Rebus", "quantity": "secukupnya"},
+        {"name": "Timun", "quantity": "hirisan"}
+      ]
+    },
+    "instructions": {
+      "step1": "Basuh beras hingga bersih",
+      "step2": "Masukkan beras, santan, daun pandan dan garam ke dalam periuk nasi",
+      "step3": "Masak seperti biasa hingga nasi masak",
+      "step4": "Sementara itu, sediakan lauk-pauk",
+      "step5": "Goreng ikan bilis hingga garing",
+      "step6": "Goreng kacang tanah hingga keperangan",
+      "step7": "Rebus telur dan potong separuh",
+      "step8": "Hiris timun nipis-nipis",
+      "step9": "Hidangkan nasi lemak dengan sambal dan lauk-pauk"
+    },
     "nutrition_info": {
       "calories": "450",
       "protein": "18g",
@@ -123,5 +137,53 @@
     },
     "tags": ["nasi-lemak", "sarapan", "malaysia", "santan"],
     "thumbnail_url": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500"
+  },
+  {
+    "title": "Overnight Oats",
+    "description": "Sarapan sihat dan mudah yang boleh disediakan malam sebelumnya. Sesuai untuk gaya hidup sibuk.",
+    "source_url": "https://www.tiktok.com/@khairulaming/video/7234567890123456792",
+    "video_platform": "TikTok",
+    "language": "ms",
+    "cuisine_type": "Barat",
+    "difficulty_level": "Mudah",
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 0,
+    "total_time_minutes": 480,
+    "servings": 1,
+    "ingredients": {
+      "base": [
+        {"name": "Rolled Oats", "quantity": "½ cawan"},
+        {"name": "Chia Seeds", "quantity": "1 sudu besar"},
+        {"name": "Fresh Milk", "quantity": "½ cawan"}
+      ],
+      "toppings": [
+        {"name": "Blueberry", "quantity": "secukupnya"},
+        {"name": "Raspberry", "quantity": "secukupnya"},
+        {"name": "Honey", "quantity": "1 sudu teh"},
+        {"name": "Pisang", "quantity": "1 biji dihiris"},
+        {"name": "Kurma", "quantity": "2-3 biji"},
+        {"name": "Sirap Gula Melaka", "quantity": "secukup rasa"},
+        {"name": "Peanut Butter", "quantity": "1 sudu besar"},
+        {"name": "Buah Naga", "quantity": "secukupnya"},
+        {"name": "Maple Syrup", "quantity": "secukup rasa"}
+      ]
+    },
+    "instructions": {
+      "step1": "Campurkan rolled oats, chia seeds, dan fresh milk dalam satu bekas.",
+      "step2": "Gaul sebati semua bahan sehingga rata.",
+      "step3": "Tutup bekas dan simpan di dalam peti sejuk.",
+      "step4": "Biarkan semalaman.",
+      "step5": "Pagi esok, keluarkan dari peti sejuk dan hidangkan.",
+      "step6": "Letakkan topping pilihan seperti blueberry, raspberry, honey, pisang, kurma, sirap gula melaka, peanut butter, jelly, buah naga, atau maple syrup."
+    },
+    "nutrition_info": {
+      "calories": "320",
+      "protein": "12g",
+      "carbs": "45g",
+      "fat": "8g",
+      "fiber": "10g"
+    },
+    "tags": ["overnight-oats", "sarapan", "sihat", "mudah", "vegetarian"],
+    "thumbnail_url": "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=500"
   }
 ]

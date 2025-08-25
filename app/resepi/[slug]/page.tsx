@@ -34,6 +34,156 @@ async function getRecipe(slug: string): Promise<Recipe | null> {
   }
 }
 
+function renderIngredients(ingredients: any) {
+  // Handle different ingredient structures
+  if (Array.isArray(ingredients)) {
+    // Simple array of strings or objects
+    return (
+      <ul className="space-y-2">
+        {ingredients.map((ingredient, index) => (
+          <li key={index} className="flex items-start">
+            <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+            <span className="text-gray-700">
+              {typeof ingredient === 'string' 
+                ? ingredient 
+                : ingredient.name 
+                  ? `${ingredient.name}${ingredient.quantity ? ` - ${ingredient.quantity}` : ''}`
+                  : JSON.stringify(ingredient)}
+            </span>
+          </li>
+        ))}
+      </ul>
+    )
+  } else if (typeof ingredients === 'object' && ingredients !== null) {
+    // Object with categories (like main_ingredients, spices_and_seasonings)
+    return (
+      <div className="space-y-6">
+        {Object.entries(ingredients).map(([category, items]) => (
+          <div key={category}>
+            <h3 className="text-lg font-semibold text-gray-800 mb-3 capitalize">
+              {category.replace(/_/g, ' ')}
+            </h3>
+            <ul className="space-y-2 ml-4">
+              {Array.isArray(items) && items.map((ingredient: any, index: number) => (
+                <li key={index} className="flex items-start">
+                  <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span className="text-gray-700">
+                    {typeof ingredient === 'string' 
+                      ? ingredient 
+                      : ingredient.name 
+                        ? `${ingredient.name}${ingredient.quantity ? ` - ${ingredient.quantity}` : ''}`
+                        : JSON.stringify(ingredient)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    )
+  } else {
+    // Fallback for unexpected structure
+    return (
+      <div className="text-gray-600">
+        <p>Bahan-bahan tidak dapat dipaparkan dalam format yang betul.</p>
+        <pre className="mt-2 text-xs bg-gray-100 p-2 rounded">
+          {JSON.stringify(ingredients, null, 2)}
+        </pre>
+      </div>
+    )
+  }
+}
+
+function renderInstructions(instructions: any) {
+  // Handle different instruction structures
+  if (Array.isArray(instructions)) {
+    // Simple array of strings or objects
+    return (
+      <ol className="space-y-4">
+        {instructions.map((instruction, index) => (
+          <li key={index} className="flex items-start">
+            <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
+              {index + 1}
+            </span>
+            <div className="text-gray-700 leading-relaxed">
+              {typeof instruction === 'string' 
+                ? instruction 
+                : instruction.text || instruction.step || JSON.stringify(instruction)}
+            </div>
+          </li>
+        ))}
+      </ol>
+    )
+  } else if (typeof instructions === 'object' && instructions !== null) {
+    // Check if it's a step-based object (step1, step2, etc.)
+    const keys = Object.keys(instructions)
+    const isStepBased = keys.some(key => key.startsWith('step'))
+    
+    if (isStepBased) {
+      // Handle step-based instructions like {step1: "...", step2: "..."}
+      const sortedSteps = keys
+        .filter(key => key.startsWith('step'))
+        .sort((a, b) => {
+          const numA = parseInt(a.replace('step', ''))
+          const numB = parseInt(b.replace('step', ''))
+          return numA - numB
+        })
+      
+      return (
+        <ol className="space-y-4">
+          {sortedSteps.map((stepKey, index) => (
+            <li key={stepKey} className="flex items-start">
+              <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
+                {index + 1}
+              </span>
+              <div className="text-gray-700 leading-relaxed">
+                {instructions[stepKey]}
+              </div>
+            </li>
+          ))}
+        </ol>
+      )
+    } else {
+      // Object with categories
+      return (
+        <div className="space-y-6">
+          {Object.entries(instructions).map(([category, steps]) => (
+            <div key={category}>
+              <h3 className="text-lg font-semibold text-gray-800 mb-3 capitalize">
+                {category.replace(/_/g, ' ')}
+              </h3>
+              <ol className="space-y-4 ml-4">
+                {Array.isArray(steps) && steps.map((instruction: any, index: number) => (
+                  <li key={index} className="flex items-start">
+                    <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
+                      {index + 1}
+                    </span>
+                    <div className="text-gray-700 leading-relaxed">
+                      {typeof instruction === 'string' 
+                        ? instruction 
+                        : instruction.text || instruction.step || JSON.stringify(instruction)}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  } else {
+    // Fallback for unexpected structure
+    return (
+      <div className="text-gray-600">
+        <p>Cara masakan tidak dapat dipaparkan dalam format yang betul.</p>
+        <pre className="mt-2 text-xs bg-gray-100 p-2 rounded">
+          {JSON.stringify(instructions, null, 2)}
+        </pre>
+      </div>
+    )
+  }
+}
+
 export default async function RecipePage({ params }: RecipePageProps) {
   const { slug } = await params
   const recipe = await getRecipe(slug)
@@ -158,22 +308,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Cara Masakan</h2>
             <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <ol className="space-y-4">
-                {recipe.instructions.map((instruction, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
-                      {index + 1}
-                    </span>
-                    <div className="text-gray-700 leading-relaxed">
-                      {typeof instruction === 'string' 
-                        ? instruction 
-                        : (instruction as { text?: string; step?: string; [key: string]: unknown }).text || 
-                          (instruction as { text?: string; step?: string; [key: string]: unknown }).step || 
-                          JSON.stringify(instruction)}
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              {renderInstructions(recipe.instructions)}
             </div>
           </div>
 
