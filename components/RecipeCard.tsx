@@ -13,7 +13,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
   return (
     <Link href={`/resepi/${slug}`} className="group block w-80 h-96 mx-auto">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 h-full flex flex-col">
-        <div className="h-48 relative overflow-hidden flex-shrink-0">
+        <div className="h-60 relative overflow-hidden flex-shrink-0">
           {recipe.thumbnail_url ? (
             <Image
               src={recipe.thumbnail_url}
