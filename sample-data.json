@@ -1,0 +1,127 @@
+[
+  {
+    "title": "Ayam Masak Merah",
+    "description": "Resepi ayam masak merah yang sedap dan mudah. Sesuai untuk hidangan keluarga.",
+    "source_url": "https://www.tiktok.com/@khairulaming/video/7234567890123456789",
+    "video_platform": "TikTok",
+    "language": "ms",
+    "cuisine_type": "Melayu",
+    "difficulty_level": "Mudah",
+    "prep_time_minutes": 20,
+    "cook_time_minutes": 45,
+    "total_time_minutes": 65,
+    "servings": 4,
+    "ingredients": [
+      "1 ekor ayam dipotong 8 bahagian",
+      "2 biji bawang besar dipotong",
+      "4 ulas bawang putih dicantas",
+      "2 sudu besar sos tiram",
+      "1 sudu besar kicap manis",
+      "1 tin tomato",
+      "Garam dan gula secukup rasa",
+      "Minyak untuk menumis"
+    ],
+    "instructions": [
+      "Panaskan minyak dalam kuali dan tumis bawang besar hingga naik bau",
+      "Masukkan bawang putih dan tumis sebentar",
+      "Masukkan ayam dan masak hingga berubah warna",
+      "Tambahkan sos tiram dan kicap manis, gaul rata",
+      "Masukkan tomato tin dan hancurkan",
+      "Tambah air secukupnya dan biarkan mendidih",
+      "Kecilkan api dan masak selama 30-40 minit hingga ayam empuk",
+      "Perasakan dengan garam dan gula",
+      "Siap untuk dihidangkan dengan nasi putih"
+    ],
+    "nutrition_info": {
+      "calories": "380",
+      "protein": "35g",
+      "carbs": "12g",
+      "fat": "22g"
+    },
+    "tags": ["ayam", "masak-merah", "mudah", "keluarga"],
+    "thumbnail_url": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500"
+  },
+  {
+    "title": "Rendang Daging",
+    "description": "Rendang daging tradisional yang kaya rempah dan penuh cita rasa.",
+    "source_url": "https://www.tiktok.com/@khairulaming/video/7234567890123456790",
+    "video_platform": "TikTok",
+    "language": "ms",
+    "cuisine_type": "Melayu",
+    "difficulty_level": "Sederhana",
+    "prep_time_minutes": 30,
+    "cook_time_minutes": 120,
+    "total_time_minutes": 150,
+    "servings": 6,
+    "ingredients": [
+      "1kg daging lembu dipotong dadu",
+      "400ml santan pekat",
+      "200ml santan cair",
+      "3 batang serai diketuk",
+      "4 helai daun limau purut",
+      "2 helai daun kunyit",
+      "Garam dan gula secukup rasa"
+    ],
+    "instructions": [
+      "Tumis rempah rendang hingga wangi dan berminyak",
+      "Masukkan daging dan gaul hingga rata dengan rempah",
+      "Tuang santan cair dan masak dengan api sederhana",
+      "Tambahkan serai, daun limau purut dan daun kunyit",
+      "Masak sambil dikacau sesekali selama 1 jam",
+      "Tuang santan pekat dan teruskan memasak",
+      "Masak hingga kuah menjadi pekat dan berminyak",
+      "Perasakan dengan garam dan gula",
+      "Siap untuk dihidangkan"
+    ],
+    "nutrition_info": {
+      "calories": "520",
+      "protein": "42g",
+      "carbs": "8g",
+      "fat": "35g"
+    },
+    "tags": ["rendang", "daging", "tradisional", "rempah"],
+    "thumbnail_url": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500"
+  },
+  {
+    "title": "Nasi Lemak",
+    "description": "Nasi lemak dengan sambal yang pedas dan sedap, hidangan kebanggaan Malaysia.",
+    "source_url": "https://www.tiktok.com/@khairulaming/video/7234567890123456791",
+    "video_platform": "TikTok", 
+    "language": "ms",
+    "cuisine_type": "Melayu",
+    "difficulty_level": "Mudah",
+    "prep_time_minutes": 25,
+    "cook_time_minutes": 35,
+    "total_time_minutes": 60,
+    "servings": 4,
+    "ingredients": [
+      "2 cawan beras",
+      "1 cawan santan",
+      "2 helai daun pandan",
+      "1 sudu teh garam",
+      "Ikan bilis goreng",
+      "Kacang tanah goreng",
+      "Telur rebus",
+      "Timun hirisan"
+    ],
+    "instructions": [
+      "Basuh beras hingga bersih",
+      "Masukkan beras, santan, daun pandan dan garam ke dalam periuk nasi",
+      "Masak seperti biasa hingga nasi masak",
+      "Sementara itu, sediakan lauk-pauk",
+      "Goreng ikan bilis hingga garing",
+      "Goreng kacang tanah hingga keperangan",
+      "Rebus telur dan potong separuh",
+      "Hiris timun nipis-nipis",
+      "Hidangkan nasi lemak dengan sambal dan lauk-pauk"
+    ],
+    "nutrition_info": {
+      "calories": "450",
+      "protein": "18g",
+      "carbs": "65g",
+      "fat": "16g"
+    },
+    "tags": ["nasi-lemak", "sarapan", "malaysia", "santan"],
+    "thumbnail_url": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500"
+  }
+]

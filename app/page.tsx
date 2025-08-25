@@ -1,103 +1,148 @@
-import Image from "next/image";
+'use client'
+
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase'
+import { Recipe } from '@/lib/types'
+import SearchBar from '@/components/SearchBar'
+import RecipeCard from '@/components/RecipeCard'
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    fetchRecipes()
+  }, [])
+
+  const fetchRecipes = async () => {
+    try {
+      setLoading(true)
+      const { data, error } = await supabase
+        .from('recipes')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        throw error
+      }
+
+      setRecipes(data || [])
+      setFilteredRecipes(data || [])
+    } catch (err) {
+      console.error('Error fetching recipes:', err)
+      setError('Gagal memuat resepi. Sila cuba lagi.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleSearch = (query: string) => {
+    if (!query.trim()) {
+      setFilteredRecipes(recipes)
+      return
+    }
+
+    const searchQuery = query.toLowerCase()
+    const filtered = recipes.filter(recipe => 
+      recipe.title.toLowerCase().includes(searchQuery) ||
+      recipe.description?.toLowerCase().includes(searchQuery) ||
+      recipe.tags?.some(tag => tag.toLowerCase().includes(searchQuery)) ||
+      recipe.cuisine_type?.toLowerCase().includes(searchQuery)
+    )
+    
+    setFilteredRecipes(filtered)
+  }
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Memuat resepi...</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center py-12">
+          <div className="text-red-600 mb-4">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Ralat</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={fetchRecipes}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            Cuba Lagi
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {/* Header Section */}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Koleksi Resepi Khairul Aming
+        </h1>
+        <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          Temui resepi masakan Malaysia yang mudah dan sedap dari Khairul Aming
+        </p>
+        
+        <SearchBar onSearch={handleSearch} />
+      </div>
+
+      {/* Recipe Stats */}
+      <div className="text-center mb-8">
+        <p className="text-gray-600">
+          Menunjukkan {filteredRecipes.length} daripada {recipes.length} resepi
+        </p>
+      </div>
+
+      {/* No Results */}
+      {filteredRecipes.length === 0 && recipes.length > 0 && (
+        <div className="text-center py-12">
+          <div className="text-gray-400 mb-4">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Tiada resepi dijumpai</h3>
+          <p className="text-gray-600">Cuba cari dengan kata kunci yang berbeza</p>
+        </div>
+      )}
+
+      {/* No Recipes at all */}
+      {recipes.length === 0 && (
+        <div className="text-center py-12">
+          <div className="text-gray-400 mb-4">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Belum ada resepi</h3>
+          <p className="text-gray-600">Resepi akan dipaparkan di sini setelah ditambah ke dalam pangkalan data</p>
+        </div>
+      )}
+
+      {/* Recipe Grid */}
+      {filteredRecipes.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredRecipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
+        </div>
+      )}
     </div>
-  );
+  )
 }
