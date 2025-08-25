@@ -15,19 +15,49 @@ async function getRecipe(slug: string): Promise<Recipe | null> {
     // Convert slug back to searchable title
     const titleSearch = slugToTitleSearch(slug)
     
-    // Search for recipe with similar title
+    // Search for recipe with similar title - get multiple results first
     const { data, error } = await supabase
       .from('recipes')
       .select('*')
       .ilike('title', `%${titleSearch}%`)
-      .single()
+      .limit(10) // Get up to 10 potential matches
+      .returns<Recipe[]>()
 
     if (error) {
       console.error('Error fetching recipe:', error)
+      // Log more details about the error for debugging
+      console.error('Search term:', titleSearch)
+      console.error('Slug:', slug)
       return null
     }
 
-    return data
+    if (!data || data.length === 0) {
+      return null
+    }
+
+    // If only one result, return it
+    if (data.length === 1) {
+      return data[0]
+    }
+
+    // Multiple results - find the best match
+    console.log(`Found ${data.length} recipes matching "${titleSearch}":`, data.map(r => r.title))
+    
+    // First, try to find exact match (case insensitive)
+    const exactMatch = data.find(recipe => 
+      recipe.title.toLowerCase() === titleSearch.toLowerCase()
+    )
+    if (exactMatch) {
+      console.log('Found exact match:', exactMatch.title)
+      return exactMatch
+    }
+
+    // Second, try to find the shortest title that contains the search term
+    // This helps avoid getting longer, more specific titles when looking for general ones
+    const sortedByLength = data.sort((a, b) => a.title.length - b.title.length)
+    console.log('Using shortest match:', sortedByLength[0].title)
+    return sortedByLength[0]
+
   } catch (error) {
     console.error('Error in getRecipe:', error)
     return null

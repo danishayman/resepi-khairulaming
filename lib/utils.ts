@@ -14,7 +14,10 @@ export function titleToSlug(title: string): string {
  * Convert a slug back to search for the original title
  */
 export function slugToTitleSearch(slug: string): string {
-  return slug.replace(/-/g, ' ')
+  return slug
+    .replace(/-/g, ' ')
+    .trim()
+    .replace(/\s+/g, ' ') // Replace multiple spaces with single space
 }
 
 /**
