@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import { Recipe } from '@/lib/types'
 import SearchBar from '@/components/SearchBar'
 import RecipeCard from '@/components/RecipeCard'
+import Image from 'next/image'
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([])
@@ -89,18 +90,30 @@ export default function Home() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header Section */}
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Koleksi Resepi Khairul Aming
-        </h1>
-        <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-          Temui resepi masakan Malaysia yang mudah dan sedap dari Khairul Aming
-        </p>
-        
-        <SearchBar onSearch={handleSearch} />
+    <div>
+      {/* Banner Section */}
+      <div className="w-full h-48 md:h-56 lg:h-64 relative overflow-hidden">
+        <Image
+          src="/banner.png"
+          alt="Khairul Aming Banner"
+          fill
+          className="object-cover object-bottom"
+          priority
+        />
       </div>
+
+      <div className="container mx-auto px-4 py-8">
+        {/* Header Section */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Koleksi Resepi Khairul Aming
+          </h1>
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Temui resepi masakan Malaysia yang mudah dan sedap dari Khairul Aming
+          </p>
+          
+          <SearchBar onSearch={handleSearch} />
+        </div>
 
       {/* Recipe Stats */}
       <div className="text-center mb-8">
@@ -135,14 +148,15 @@ export default function Home() {
         </div>
       )}
 
-      {/* Recipe Grid */}
-      {filteredRecipes.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
-          {filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
-      )}
+        {/* Recipe Grid */}
+        {filteredRecipes.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+            {filteredRecipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
