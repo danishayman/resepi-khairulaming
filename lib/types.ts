@@ -1,3 +1,27 @@
+// Types for recipe ingredients
+export type IngredientItem = string | {
+  name?: string
+  quantity?: string
+  [key: string]: unknown
+}
+
+export type IngredientsData = 
+  | IngredientItem[]
+  | Record<string, IngredientItem[]>
+  | Record<string, unknown>
+
+// Types for recipe instructions  
+export type InstructionItem = string | {
+  text?: string
+  step?: string
+  [key: string]: unknown
+}
+
+export type InstructionsData = 
+  | InstructionItem[]
+  | Record<string, InstructionItem[]>
+  | Record<string, unknown>
+
 export interface Recipe {
   id: string
   title: string
@@ -11,8 +35,8 @@ export interface Recipe {
   cook_time_minutes: number | null
   total_time_minutes: number | null
   servings: number | null
-  ingredients: any // JSONB - can be array or object with categories like {main_ingredients: [], spices_and_seasonings: []}
-  instructions: any // JSONB - can be array or object with categories
+  ingredients: IngredientsData // JSONB - can be array or object with categories like {main_ingredients: [], spices_and_seasonings: []}
+  instructions: InstructionsData // JSONB - can be array or object with categories
   nutrition_info: Record<string, string | number> | null // JSONB object
   tags: string[] | null
   transcript: string | null

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import { Recipe } from '@/lib/types'
+import { Recipe, IngredientsData, InstructionsData, IngredientItem, InstructionItem } from '@/lib/types'
 import { slugToTitleSearch, formatTime } from '@/lib/utils'
 import TikTokEmbed from '@/components/TikTokEmbed'
 
@@ -34,7 +34,7 @@ async function getRecipe(slug: string): Promise<Recipe | null> {
   }
 }
 
-function renderIngredients(ingredients: any) {
+function renderIngredients(ingredients: IngredientsData) {
   // Handle different ingredient structures
   if (Array.isArray(ingredients)) {
     // Simple array of strings or objects
@@ -64,7 +64,7 @@ function renderIngredients(ingredients: any) {
               {category.replace(/_/g, ' ')}
             </h3>
             <ul className="space-y-2 ml-4">
-              {Array.isArray(items) && items.map((ingredient: any, index: number) => (
+              {Array.isArray(items) && items.map((ingredient: IngredientItem, index: number) => (
                 <li key={index} className="flex items-start">
                   <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                   <span className="text-gray-700">
@@ -94,7 +94,7 @@ function renderIngredients(ingredients: any) {
   }
 }
 
-function renderInstructions(instructions: any) {
+function renderInstructions(instructions: InstructionsData) {
   // Handle different instruction structures
   if (Array.isArray(instructions)) {
     // Simple array of strings or objects
@@ -137,7 +137,9 @@ function renderInstructions(instructions: any) {
                 {index + 1}
               </span>
               <div className="text-gray-700 leading-relaxed">
-                {instructions[stepKey]}
+                {typeof instructions[stepKey] === 'string' 
+                  ? instructions[stepKey] 
+                  : JSON.stringify(instructions[stepKey])}
               </div>
             </li>
           ))}
@@ -153,7 +155,7 @@ function renderInstructions(instructions: any) {
                 {category.replace(/_/g, ' ')}
               </h3>
               <ol className="space-y-4 ml-4">
-                {Array.isArray(steps) && steps.map((instruction: any, index: number) => (
+                {Array.isArray(steps) && steps.map((instruction: InstructionItem, index: number) => (
                   <li key={index} className="flex items-start">
                     <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
                       {index + 1}
