@@ -64,6 +64,15 @@ async function getRecipe(slug: string): Promise<Recipe | null> {
   }
 }
 
+function getCategoryDisplayName(category: string): string {
+  const categoryMap: Record<string, string> = {
+    'main_ingredients': 'Bahan Utama',
+    'spices_and_seasonings': 'Rempah & Perasa'
+  }
+  
+  return categoryMap[category] || category.replace(/_/g, ' ')
+}
+
 function renderIngredients(ingredients: IngredientsData) {
   // Handle different ingredient structures
   if (Array.isArray(ingredients)) {
@@ -91,7 +100,7 @@ function renderIngredients(ingredients: IngredientsData) {
         {Object.entries(ingredients).map(([category, items]) => (
           <div key={category}>
             <h3 className="text-lg font-semibold text-gray-800 mb-3 capitalize">
-              {category.replace(/_/g, ' ')}
+              {getCategoryDisplayName(category)}
             </h3>
             <ul className="space-y-2 ml-4">
               {Array.isArray(items) && items.map((ingredient: IngredientItem, index: number) => (
@@ -312,21 +321,10 @@ export default async function RecipePage({ params }: RecipePageProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Column - Recipe Details */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Thumbnail */}
-          {recipe.thumbnail_url && (
-            <div className="aspect-video relative rounded-lg overflow-hidden">
-              <Image
-                src={recipe.thumbnail_url}
-                alt={recipe.title}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          )}
+        <div className="space-y-8">
+
 
           {/* Ingredients */}
           <div>
