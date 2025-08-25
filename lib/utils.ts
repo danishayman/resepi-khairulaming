@@ -4,7 +4,8 @@
 export function titleToSlug(title: string): string {
   return title
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+    .replace(/&/g, 'and') // Replace & with 'and' to preserve meaning
+    .replace(/[^a-z0-9\s-]/g, '') // Remove other special characters
     .replace(/\s+/g, '-') // Replace spaces with hyphens
     .replace(/-+/g, '-') // Replace multiple hyphens with single
     .trim()
@@ -15,6 +16,7 @@ export function titleToSlug(title: string): string {
  */
 export function slugToTitleSearch(slug: string): string {
   return slug
+    .replace(/\band\b/g, '&') // Convert 'and' back to '&' for better database matching
     .replace(/-/g, ' ')
     .trim()
     .replace(/\s+/g, ' ') // Replace multiple spaces with single space

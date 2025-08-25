@@ -109,7 +109,7 @@ export default function Home() {
             Koleksi Resepi Khairul Aming
           </h1>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-          Hey what’s up guys!!
+          Hey what’s up guys!
           </p>
           
           <SearchBar onSearch={handleSearch} />
