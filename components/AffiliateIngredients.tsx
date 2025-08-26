@@ -25,9 +25,9 @@ interface IngredientItemProps {
 const IngredientItemComponent: React.FC<IngredientItemProps> = ({ item, index }) => {
   if (typeof item === 'string') {
     return (
-      <li key={index} className="flex items-start gap-2 py-1">
-        <span className="text-gray-400 mt-1">•</span>
-        <span dangerouslySetInnerHTML={{ __html: item }} />
+      <li key={index} className="flex items-start gap-3 py-1">
+        <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></span>
+        <span className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: item }} />
       </li>
     )
   }
@@ -37,12 +37,12 @@ const IngredientItemComponent: React.FC<IngredientItemProps> = ({ item, index })
     const quantity = item.quantity || ''
     
     return (
-      <li key={index} className="flex items-start gap-2 py-1">
-        <span className="text-gray-400 mt-1">•</span>
+      <li key={index} className="flex items-start gap-3 py-1">
+        <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></span>
         <div className="flex-1">
-          <span dangerouslySetInnerHTML={{ __html: name }} />
+          <span className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: name }} />
           {quantity && (
-            <span className="text-gray-600 ml-2">({quantity})</span>
+            <span className="text-gray-600 ml-2 font-medium">({quantity})</span>
           )}
         </div>
       </li>
@@ -62,13 +62,13 @@ const IngredientsList: React.FC<{ items: IngredientItem[]; title?: string }> = (
   if (!items || items.length === 0) return null
 
   return (
-    <div className="mb-4">
+    <div className="mb-6 last:mb-0">
       {title && (
-        <h4 className="font-semibold text-gray-900 mb-2 capitalize">
+        <h4 className="font-semibold text-gray-800 mb-3 text-lg capitalize border-b border-gray-200 pb-2">
           {title.replace(/_/g, ' ')}
         </h4>
       )}
-      <ul className="space-y-1">
+      <ul className="space-y-0.5">
         {items.map((item, index) => (
           <IngredientItemComponent key={index} item={item} index={index} />
         ))}
@@ -99,9 +99,10 @@ export const AffiliateIngredients: React.FC<AffiliateIngredientsProps> = ({
       <div className={`ingredients-container ${className}`}>
         <IngredientsList items={processedIngredients} />
         {showStats && result.linksFound > 0 && (
-          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-            <p className="text-sm text-blue-700">
-              🔗 {result.linksFound} affiliate link{result.linksFound !== 1 ? 's' : ''} found
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-blue-700 flex items-center">
+              <span className="mr-2">🔗</span>
+              {result.linksFound} affiliate link{result.linksFound !== 1 ? 's' : ''} found
             </p>
           </div>
         )}
