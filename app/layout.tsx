@@ -43,6 +43,20 @@ export default function RootLayout({
           </div>
         </footer>
         <Analytics />
+
+        {/* Fixed credit at bottom right */}
+        <div className="fixed bottom-1 right-1 z-50">
+          <a 
+            href="https://danishaiman.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="bg-gray-900 text-white text-xs px-3 py-2 rounded-full shadow-lg hover:bg-gray-800 transition-colors duration-200 flex items-center gap-1"
+          >
+            <span>Created by</span>
+            <span className="font-medium">@danishayman</span>
+          </a>
+        </div>
+
       </body>
     </html>
   );
