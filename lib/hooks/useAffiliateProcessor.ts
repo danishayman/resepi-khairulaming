@@ -93,7 +93,7 @@ export function useProcessedRecipes(
 /**
  * Hook to get affiliate processing statistics
  */
-export function useAffiliateStats(processedRecipes: any[] | null | undefined) {
+export function useAffiliateStats(processedRecipes: Recipe[] | null | undefined) {
   const processor = useMemo(() => new RecipeProcessor(), [])
   
   const stats = useMemo(() => {

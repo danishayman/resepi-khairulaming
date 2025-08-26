@@ -6,7 +6,7 @@
  */
 
 import { AffiliateLinksManager } from './affiliateLinks'
-import { IngredientsData, IngredientItem } from './types'
+import { IngredientsData, IngredientItem, Recipe } from './types'
 
 export interface ProcessedIngredientItem {
   name?: string
@@ -55,7 +55,7 @@ export class RecipeProcessor {
     }
 
     const finalOptions = { ...defaultOptions, ...options }
-    let linksFound = 0
+    const linksFound = 0
     const processedItems: string[] = []
 
     const processedIngredients = this.processIngredientsRecursive(
@@ -84,7 +84,7 @@ export class RecipeProcessor {
     // Handle array of ingredients
     if (Array.isArray(data)) {
       const processedArray = data.map(item => 
-        this.processIngredientItem(item, options, linksFound, processedItems)
+        this.processIngredientItem(item, options)
       )
       
       return {
@@ -145,9 +145,7 @@ export class RecipeProcessor {
    */
   private processIngredientItem(
     item: IngredientItem,
-    options: ProcessingOptions,
-    currentLinksFound: number,
-    currentProcessedItems: string[]
+    options: ProcessingOptions
   ): { item: IngredientItem; linksAdded: number; newProcessedItems: string[] } {
     let linksAdded = 0
     const newProcessedItems: string[] = []
@@ -251,8 +249,8 @@ export class RecipeProcessor {
   /**
    * Process entire recipe object, focusing on ingredients
    */
-  processRecipe(recipe: any, options: ProcessingOptions = {}): any {
-    const processedRecipe = { ...recipe }
+  processRecipe(recipe: Recipe, options: ProcessingOptions = {}): Recipe & { _affiliateProcessing?: { linksFound: number; processedItems: string[]; processedAt: string } } {
+    const processedRecipe: Recipe & { _affiliateProcessing?: { linksFound: number; processedItems: string[]; processedAt: string } } = { ...recipe }
     
     if (recipe.ingredients) {
       const result = this.processIngredients(recipe.ingredients, options)
@@ -272,14 +270,14 @@ export class RecipeProcessor {
   /**
    * Batch process multiple recipes
    */
-  processRecipes(recipes: any[], options: ProcessingOptions = {}): any[] {
+  processRecipes(recipes: Recipe[], options: ProcessingOptions = {}): (Recipe & { _affiliateProcessing?: { linksFound: number; processedItems: string[]; processedAt: string } })[] {
     return recipes.map(recipe => this.processRecipe(recipe, options))
   }
 
   /**
    * Get statistics about affiliate link processing
    */
-  getProcessingStats(recipes: any[]): {
+  getProcessingStats(recipes: (Recipe & { _affiliateProcessing?: { linksFound: number; processedItems: string[]; processedAt: string } })[]): {
     totalRecipes: number
     recipesWithLinks: number
     totalLinksFound: number
@@ -327,10 +325,10 @@ export const processRecipeIngredients = (
   return recipeProcessor.processIngredients(ingredients, options)
 }
 
-export const processRecipe = (recipe: any, options?: ProcessingOptions): any => {
+export const processRecipe = (recipe: Recipe, options?: ProcessingOptions): Recipe & { _affiliateProcessing?: { linksFound: number; processedItems: string[]; processedAt: string } } => {
   return recipeProcessor.processRecipe(recipe, options)
 }
 
-export const processRecipes = (recipes: any[], options?: ProcessingOptions): any[] => {
+export const processRecipes = (recipes: Recipe[], options?: ProcessingOptions): (Recipe & { _affiliateProcessing?: { linksFound: number; processedItems: string[]; processedAt: string } })[] => {
   return recipeProcessor.processRecipes(recipes, options)
 }

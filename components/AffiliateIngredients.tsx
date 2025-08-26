@@ -113,7 +113,7 @@ export const AffiliateIngredients: React.FC<AffiliateIngredientsProps> = ({
   // Handle object format with categories
   if (typeof processedIngredients === 'object' && processedIngredients !== null) {
     const categories = Object.entries(processedIngredients).filter(
-      ([_, value]) => Array.isArray(value)
+      ([, value]) => Array.isArray(value)
     )
 
     return (

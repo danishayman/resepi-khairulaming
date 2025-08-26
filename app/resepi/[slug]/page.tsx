@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import { Recipe, IngredientsData, InstructionsData, IngredientItem, InstructionItem } from '@/lib/types'
+import { Recipe, InstructionsData, InstructionItem } from '@/lib/types'
 import { slugToTitleSearch, formatTime } from '@/lib/utils'
 import TikTokEmbed from '@/components/TikTokEmbed'
 import AffiliateIngredients from '@/components/AffiliateIngredients'
@@ -65,74 +64,9 @@ async function getRecipe(slug: string): Promise<Recipe | null> {
   }
 }
 
-function getCategoryDisplayName(category: string): string {
-  const categoryMap: Record<string, string> = {
-    'main_ingredients': 'Bahan Utama',
-    'spices_and_seasonings': 'Rempah & Perasa'
-  }
 
-  return categoryMap[category] || category.replace(/_/g, ' ')
-}
 
-function renderIngredients(ingredients: IngredientsData) {
-  // Handle different ingredient structures
-  if (Array.isArray(ingredients)) {
-    // Simple array of strings or objects
-    return (
-      <ul className="space-y-2">
-        {ingredients.map((ingredient, index) => (
-          <li key={index} className="flex items-start">
-            <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-            <span className="text-gray-700">
-              {typeof ingredient === 'string'
-                ? ingredient
-                : ingredient.name
-                  ? `${ingredient.name}${ingredient.quantity ? ` - ${ingredient.quantity}` : ''}`
-                  : JSON.stringify(ingredient)}
-            </span>
-          </li>
-        ))}
-      </ul>
-    )
-  } else if (typeof ingredients === 'object' && ingredients !== null) {
-    // Object with categories (like main_ingredients, spices_and_seasonings)
-    return (
-      <div className="space-y-6">
-        {Object.entries(ingredients).map(([category, items]) => (
-          <div key={category}>
-            <h3 className="text-lg font-semibold text-gray-800 mb-3 capitalize">
-              {getCategoryDisplayName(category)}
-            </h3>
-            <ul className="space-y-2 ml-4">
-              {Array.isArray(items) && items.map((ingredient: IngredientItem, index: number) => (
-                <li key={index} className="flex items-start">
-                  <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                  <span className="text-gray-700">
-                    {typeof ingredient === 'string'
-                      ? ingredient
-                      : ingredient.name
-                        ? `${ingredient.name}${ingredient.quantity ? ` - ${ingredient.quantity}` : ''}`
-                        : JSON.stringify(ingredient)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    )
-  } else {
-    // Fallback for unexpected structure
-    return (
-      <div className="text-gray-600">
-        <p>Bahan-bahan tidak dapat dipaparkan dalam format yang betul.</p>
-        <pre className="mt-2 text-xs bg-gray-100 p-2 rounded">
-          {JSON.stringify(ingredients, null, 2)}
-        </pre>
-      </div>
-    )
-  }
-}
+
 
 function renderInstructions(instructions: InstructionsData) {
   // Handle different instruction structures

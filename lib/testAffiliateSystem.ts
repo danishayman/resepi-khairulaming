@@ -3,11 +3,12 @@
  * This file shows how to use the RecipeProcessor with sample data
  */
 
-import { processRecipe, processRecipes, recipeProcessor } from './recipeProcessor'
+import { processRecipes, recipeProcessor } from './recipeProcessor'
 import { affiliateManager } from './affiliateLinks'
+import { Recipe } from './types'
 
 // Sample recipe data based on your existing structure
-const sampleRecipes = [
+const sampleRecipes: Partial<Recipe>[] = [
   {
     "title": "Ayam Masak Merah",
     "description": "Resepi ayam masak merah yang sedap dan mudah. Sesuai untuk hidangan keluarga.",
@@ -71,7 +72,7 @@ export function testAffiliateSystem() {
   
   // Test 2: Process complete recipes
   console.log('🍳 Test 2: Processing complete recipes')
-  const processedRecipes = processRecipes(sampleRecipes)
+  const processedRecipes = processRecipes(sampleRecipes as Recipe[])
   
   processedRecipes.forEach((recipe, index) => {
     console.log(`\n--- Recipe ${index + 1}: ${recipe.title} ---`)
@@ -107,7 +108,7 @@ export function testAffiliateSystem() {
   console.log('\n➕ Test 5: Adding new affiliate link at runtime')
   affiliateManager.addProduct({
     keywords: ['coconut oil', 'minyak kelapa'],
-    url: 'https://shopee.com.my/product/123456789/coconut-oil',
+    url: 'https://s.shopee.com.my/8pbt0OnQYg',
     displayName: 'Minyak Kelapa'
   })
   
