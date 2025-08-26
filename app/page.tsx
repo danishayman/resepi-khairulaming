@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Recipe } from '@/lib/types'
+import { shuffleArray } from '@/lib/utils'
 import SearchBar from '@/components/SearchBar'
 import RecipeCard from '@/components/RecipeCard'
 import Image from 'next/image'
@@ -12,6 +13,7 @@ export default function Home() {
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     fetchRecipes()
@@ -23,23 +25,28 @@ export default function Home() {
       const { data, error } = await supabase
         .from('recipes')
         .select('*')
-        .order('created_at', { ascending: false })
-
+        // Remove the ordering since we'll shuffle on the client side
+        
       if (error) {
         throw error
       }
 
-      setRecipes(data || [])
-      setFilteredRecipes(data || [])
+      // Shuffle the recipes to randomize order on each page load/refresh
+      const shuffledRecipes = shuffleArray(data || [])
+      
+      setRecipes(shuffledRecipes)
+      setFilteredRecipes(shuffledRecipes)
     } catch (err) {
       console.error('Error fetching recipes:', err)
-      setError('Gagal memuat resepi. Sila cuba lagi.')
+      setError('Error fetching resepi. Sila cuba lagi.')
     } finally {
       setLoading(false)
     }
   }
 
   const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    
     if (!query.trim()) {
       setFilteredRecipes(recipes)
       return
@@ -61,7 +68,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Memuat resepi...</p>
+          <p className="mt-4 text-gray-600">Loading resepi...</p>
         </div>
       </div>
     )
@@ -115,12 +122,14 @@ export default function Home() {
           <SearchBar onSearch={handleSearch} />
         </div>
 
-      {/* Recipe Stats */}
-      <div className="text-center mb-8">
-        <p className="text-gray-600">
-          Menunjukkan {filteredRecipes.length} daripada {recipes.length} resepi
-        </p>
-      </div>
+      {/* Recipe Stats - Only show when user is searching */}
+      {searchQuery.trim() && (
+        <div className="text-center mb-8">
+          <p className="text-gray-600">
+            Showing {filteredRecipes.length} daripada {recipes.length} resepi
+          </p>
+        </div>
+      )}
 
       {/* No Results */}
       {filteredRecipes.length === 0 && recipes.length > 0 && (
