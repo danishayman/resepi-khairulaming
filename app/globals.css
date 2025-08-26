@@ -63,3 +63,44 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #a1a1a1;
 }
+
+/* Affiliate Links Styling */
+.affiliate-link, 
+a[href*="shopee.com.my"],
+a[href*="lazada.com.my"],
+a[href*="amazon.com"] {
+  color: #2563eb !important;
+  text-decoration: underline !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.affiliate-link:hover,
+a[href*="shopee.com.my"]:hover,
+a[href*="lazada.com.my"]:hover,
+a[href*="amazon.com"]:hover {
+  color: #1d4ed8 !important;
+  text-decoration: underline !important;
+  background-color: #eff6ff !important;
+  padding: 1px 2px !important;
+  border-radius: 2px !important;
+}
+
+/* Ensure affiliate links in ingredients are styled */
+.ingredients-container a,
+.affiliate-ingredients a {
+  color: #2563eb !important;
+  text-decoration: underline !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.ingredients-container a:hover,
+.affiliate-ingredients a:hover {
+  color: #1d4ed8 !important;
+  background-color: #eff6ff !important;
+  padding: 1px 2px !important;
+  border-radius: 2px !important;
+}

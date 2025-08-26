@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import { Recipe, IngredientsData, InstructionsData, IngredientItem, InstructionItem } from '@/lib/types'
 import { slugToTitleSearch, formatTime } from '@/lib/utils'
 import TikTokEmbed from '@/components/TikTokEmbed'
+import AffiliateIngredients from '@/components/AffiliateIngredients'
 
 interface RecipePageProps {
   params: Promise<{ slug: string }>
@@ -14,7 +15,7 @@ async function getRecipe(slug: string): Promise<Recipe | null> {
   try {
     // Convert slug back to searchable title
     const titleSearch = slugToTitleSearch(slug)
-    
+
     // Search for recipe with similar title - get multiple results first
     const { data, error } = await supabase
       .from('recipes')
@@ -42,9 +43,9 @@ async function getRecipe(slug: string): Promise<Recipe | null> {
 
     // Multiple results - find the best match
     console.log(`Found ${data.length} recipes matching "${titleSearch}":`, data.map(r => r.title))
-    
+
     // First, try to find exact match (case insensitive)
-    const exactMatch = data.find(recipe => 
+    const exactMatch = data.find(recipe =>
       recipe.title.toLowerCase() === titleSearch.toLowerCase()
     )
     if (exactMatch) {
@@ -69,7 +70,7 @@ function getCategoryDisplayName(category: string): string {
     'main_ingredients': 'Bahan Utama',
     'spices_and_seasonings': 'Rempah & Perasa'
   }
-  
+
   return categoryMap[category] || category.replace(/_/g, ' ')
 }
 
@@ -83,9 +84,9 @@ function renderIngredients(ingredients: IngredientsData) {
           <li key={index} className="flex items-start">
             <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
             <span className="text-gray-700">
-              {typeof ingredient === 'string' 
-                ? ingredient 
-                : ingredient.name 
+              {typeof ingredient === 'string'
+                ? ingredient
+                : ingredient.name
                   ? `${ingredient.name}${ingredient.quantity ? ` - ${ingredient.quantity}` : ''}`
                   : JSON.stringify(ingredient)}
             </span>
@@ -107,9 +108,9 @@ function renderIngredients(ingredients: IngredientsData) {
                 <li key={index} className="flex items-start">
                   <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                   <span className="text-gray-700">
-                    {typeof ingredient === 'string' 
-                      ? ingredient 
-                      : ingredient.name 
+                    {typeof ingredient === 'string'
+                      ? ingredient
+                      : ingredient.name
                         ? `${ingredient.name}${ingredient.quantity ? ` - ${ingredient.quantity}` : ''}`
                         : JSON.stringify(ingredient)}
                   </span>
@@ -145,8 +146,8 @@ function renderInstructions(instructions: InstructionsData) {
               {index + 1}
             </span>
             <div className="text-gray-700 leading-relaxed">
-              {typeof instruction === 'string' 
-                ? instruction 
+              {typeof instruction === 'string'
+                ? instruction
                 : instruction.text || instruction.step || JSON.stringify(instruction)}
             </div>
           </li>
@@ -157,7 +158,7 @@ function renderInstructions(instructions: InstructionsData) {
     // Check if it's a step-based object (step1, step2, etc.)
     const keys = Object.keys(instructions)
     const isStepBased = keys.some(key => key.startsWith('step'))
-    
+
     if (isStepBased) {
       // Handle step-based instructions like {step1: "...", step2: "..."}
       const sortedSteps = keys
@@ -167,7 +168,7 @@ function renderInstructions(instructions: InstructionsData) {
           const numB = parseInt(b.replace('step', ''))
           return numA - numB
         })
-      
+
       return (
         <ol className="space-y-4">
           {sortedSteps.map((stepKey, index) => (
@@ -176,8 +177,8 @@ function renderInstructions(instructions: InstructionsData) {
                 {index + 1}
               </span>
               <div className="text-gray-700 leading-relaxed">
-                {typeof instructions[stepKey] === 'string' 
-                  ? instructions[stepKey] 
+                {typeof instructions[stepKey] === 'string'
+                  ? instructions[stepKey]
                   : JSON.stringify(instructions[stepKey])}
               </div>
             </li>
@@ -200,8 +201,8 @@ function renderInstructions(instructions: InstructionsData) {
                       {index + 1}
                     </span>
                     <div className="text-gray-700 leading-relaxed">
-                      {typeof instruction === 'string' 
-                        ? instruction 
+                      {typeof instruction === 'string'
+                        ? instruction
                         : instruction.text || instruction.step || JSON.stringify(instruction)}
                     </div>
                   </li>
@@ -237,7 +238,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Back Button */}
       <div className="mb-6">
-        <Link 
+        <Link
           href="/"
           className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
         >
@@ -253,7 +254,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           {recipe.title}
         </h1>
-        
+
         {recipe.description && (
           <p className="text-lg text-gray-600 mb-6">
             {recipe.description}
@@ -263,17 +264,16 @@ export default async function RecipePage({ params }: RecipePageProps) {
         {/* Recipe Meta */}
         <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
           {recipe.difficulty_level && (
-            <span className={`px-3 py-1 rounded-full font-medium ${
-              recipe.difficulty_level.toLowerCase() === 'mudah' 
+            <span className={`px-3 py-1 rounded-full font-medium ${recipe.difficulty_level.toLowerCase() === 'mudah'
                 ? 'bg-green-100 text-green-800'
                 : recipe.difficulty_level.toLowerCase() === 'sederhana'
-                ? 'bg-yellow-100 text-yellow-800'
-                : 'bg-red-100 text-red-800'
-            }`}>
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
+              }`}>
               {recipe.difficulty_level}
             </span>
           )}
-          
+
           {recipe.cuisine_type && (
             <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full">
               {recipe.cuisine_type}
@@ -291,7 +291,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
               <div className="text-sm text-gray-600">Masa Persediaan</div>
             </div>
           )}
-          
+
           {recipe.cook_time_minutes && (
             <div className="text-center p-4 bg-gray-50 rounded-lg">
               <div className="text-2xl font-bold text-orange-600 mb-1">
@@ -300,7 +300,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
               <div className="text-sm text-gray-600">Masa Masakan</div>
             </div>
           )}
-          
+
           {recipe.total_time_minutes && (
             <div className="text-center p-4 bg-gray-50 rounded-lg">
               <div className="text-2xl font-bold text-green-600 mb-1">
@@ -309,7 +309,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
               <div className="text-sm text-gray-600">Jumlah Masa</div>
             </div>
           )}
-          
+
           {recipe.servings && (
             <div className="text-center p-4 bg-gray-50 rounded-lg">
               <div className="text-2xl font-bold text-purple-600 mb-1">
@@ -330,7 +330,10 @@ export default async function RecipePage({ params }: RecipePageProps) {
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Bahan-bahan</h2>
             <div className="bg-white border border-gray-200 rounded-lg p-6">
-              {renderIngredients(recipe.ingredients)}
+              <AffiliateIngredients
+                ingredients={recipe.ingredients}
+                showStats={true}
+              />
             </div>
           </div>
 
