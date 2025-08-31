@@ -23,17 +23,24 @@ export default function Home() {
     try {
       setLoading(true);
       const { data, error } = await supabase.from("recipes").select("*");
-      // Remove the ordering since we'll shuffle on the client side
 
       if (error) {
         throw error;
       }
 
-      // Shuffle the recipes to randomize order on each page load/refresh
-      const shuffledRecipes = shuffleArray(data || []);
-
-      setRecipes(shuffledRecipes);
-      setFilteredRecipes(shuffledRecipes);
+      // Only shuffle the recipes on the client side after initial render
+      // This prevents hydration mismatches
+      const rawData = data || [];
+      setRecipes(rawData);
+      setFilteredRecipes(rawData);
+      
+      // Apply shuffling in a separate effect after hydration is complete
+      setTimeout(() => {
+        const shuffledRecipes = shuffleArray(rawData);
+        setRecipes(shuffledRecipes);
+        setFilteredRecipes(shuffledRecipes);
+      }, 0);
+      
     } catch (err) {
       console.error("Error fetching recipes:", err);
       setError("Error fetching resepi. Sila cuba lagi.");
