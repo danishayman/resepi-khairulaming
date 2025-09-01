@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { Recipe, IngredientsData, InstructionsData, IngredientItem, InstructionItem } from '@/lib/types'
 import { slugToTitleSearch, formatTime } from '@/lib/utils'
 import TikTokEmbed from '@/components/TikTokEmbed'
+import ShareButton from '@/components/ShareButton'
 
 interface RecipePageProps {
   params: Promise<{ slug: string }>
@@ -232,6 +233,9 @@ export default async function RecipePage({ params }: RecipePageProps) {
     notFound()
   }
 
+  // Generate the full URL for sharing
+  const currentUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://resepika.my'}/resepi/${slug}`
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Back Button */}
@@ -317,6 +321,23 @@ export default async function RecipePage({ params }: RecipePageProps) {
               <div className="text-sm text-gray-600">Hidangan</div>
             </div>
           )}
+        </div>
+
+        {/* Share Section */}
+        <div className="mb-8 bg-gray-50 rounded-lg p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-1">Share Resepi ni!</h3>
+              <p className="text-sm text-gray-600">Kongsi dengan rakan-rakan dan keluarga</p>
+            </div>
+            <div className="flex-shrink-0">
+              <ShareButton 
+                title={recipe.title}
+                url={currentUrl}
+                description={recipe.description || `Resepi ${recipe.title} dari Khairul Aming`}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
