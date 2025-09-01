@@ -55,6 +55,11 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: '*.pexels.com',
+      },
+      // Allow localhost for development
+      {
+        protocol: 'http',
+        hostname: 'localhost',
       }
     ],
   },

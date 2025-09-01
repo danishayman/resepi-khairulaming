@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Recipe } from '@/lib/types'
-import { titleToSlug, formatTime } from '@/lib/utils'
+import { titleToSlug, formatTime, getThumbnailUrl } from '@/lib/utils'
 
 interface RecipeCardProps {
   recipe: Recipe
@@ -9,14 +9,15 @@ interface RecipeCardProps {
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {
   const slug = titleToSlug(recipe.title)
+  const thumbnailUrl = getThumbnailUrl(recipe.thumbnail_url)
 
   return (
     <Link href={`/resepi/${slug}`} className="group block w-80 h-96 mx-auto">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 h-full flex flex-col">
         <div className="h-70 relative overflow-hidden flex-shrink-0">
-          {recipe.thumbnail_url ? (
+          {thumbnailUrl ? (
             <Image
-              src={recipe.thumbnail_url}
+              src={thumbnailUrl}
               alt={recipe.title}
               fill
               className="object-cover"

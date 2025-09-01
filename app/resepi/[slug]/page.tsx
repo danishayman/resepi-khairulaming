@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { Recipe, IngredientsData, InstructionsData, IngredientItem, InstructionItem } from '@/lib/types'

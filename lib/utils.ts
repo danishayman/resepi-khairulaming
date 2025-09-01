@@ -56,6 +56,31 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 /**
+ * Convert local thumbnail path to proper URL
+ * Handles both local paths (thumbnails\thumb_xxx.jpg) and remote URLs
+ */
+export function getThumbnailUrl(thumbnailPath: string | null): string | null {
+  if (!thumbnailPath) return null
+  
+  // If it's already a full URL (starts with http), return as is
+  if (thumbnailPath.startsWith('http')) {
+    return thumbnailPath
+  }
+  
+  // If it's a local path, convert to proper URL
+  // Handle both forward slashes and backslashes
+  const cleanPath = thumbnailPath.replace(/\\/g, '/')
+  
+  // If it starts with thumbnails/, make it a relative path from public
+  if (cleanPath.startsWith('thumbnails/')) {
+    return `/${cleanPath}`
+  }
+  
+  // If it doesn't start with thumbnails/, assume it's already in the format we need
+  return `/${cleanPath}`
+}
+
+/**
  * Extract TikTok video ID from URL for embedding
  */
 export function getTikTokEmbedUrl(sourceUrl: string): string | null {
