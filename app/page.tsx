@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { Recipe } from "@/lib/types";
 import { shuffleArray } from "@/lib/utils";
@@ -8,12 +8,20 @@ import SearchBar from "@/components/SearchBar";
 import RecipeCard from "@/components/RecipeCard";
 import Image from "next/image";
 
+const RECIPES_PER_PAGE = 12;
+
 export default function Home() {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
+  const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchRecipes();
@@ -31,14 +39,17 @@ export default function Home() {
       // Only shuffle the recipes on the client side after initial render
       // This prevents hydration mismatches
       const rawData = data || [];
-      setRecipes(rawData);
-      setFilteredRecipes(rawData);
       
       // Apply shuffling in a separate effect after hydration is complete
       setTimeout(() => {
         const shuffledRecipes = shuffleArray(rawData);
-        setRecipes(shuffledRecipes);
+        setAllRecipes(shuffledRecipes);
         setFilteredRecipes(shuffledRecipes);
+        
+        // Load first page
+        const firstPage = shuffledRecipes.slice(0, RECIPES_PER_PAGE);
+        setDisplayedRecipes(firstPage);
+        setHasMore(shuffledRecipes.length > RECIPES_PER_PAGE);
       }, 0);
       
     } catch (err) {
@@ -49,24 +60,85 @@ export default function Home() {
     }
   };
 
+  const loadMoreRecipes = useCallback(() => {
+    if (loadingMore || !hasMore) return;
+
+    setLoadingMore(true);
+    
+    setTimeout(() => {
+      const startIndex = page * RECIPES_PER_PAGE;
+      const endIndex = startIndex + RECIPES_PER_PAGE;
+      const recipesToDisplay = searchQuery.trim() 
+        ? filteredRecipes 
+        : allRecipes;
+      
+      const nextRecipes = recipesToDisplay.slice(startIndex, endIndex);
+      
+      if (nextRecipes.length > 0) {
+        setDisplayedRecipes(prev => [...prev, ...nextRecipes]);
+        setPage(prev => prev + 1);
+        setHasMore(endIndex < recipesToDisplay.length);
+      } else {
+        setHasMore(false);
+      }
+      
+      setLoadingMore(false);
+    }, 500); // Small delay for smooth loading experience
+  }, [page, hasMore, loadingMore, filteredRecipes, allRecipes, searchQuery]);
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    if (loading) return;
+
+    const options = {
+      root: null,
+      rootMargin: '100px',
+      threshold: 0.1
+    };
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMore && !loadingMore) {
+        loadMoreRecipes();
+      }
+    }, options);
+
+    if (loadMoreRef.current) {
+      observerRef.current.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [hasMore, loadingMore, loadMoreRecipes, loading]);
+
   const handleSearch = (query: string) => {
     setSearchQuery(query);
 
     if (!query.trim()) {
-      setFilteredRecipes(recipes);
+      setFilteredRecipes(allRecipes);
+      const firstPage = allRecipes.slice(0, RECIPES_PER_PAGE);
+      setDisplayedRecipes(firstPage);
+      setPage(1);
+      setHasMore(allRecipes.length > RECIPES_PER_PAGE);
       return;
     }
 
-    const searchQuery = query.toLowerCase();
-    const filtered = recipes.filter(
+    const searchQueryLower = query.toLowerCase();
+    const filtered = allRecipes.filter(
       (recipe) =>
-        recipe.title.toLowerCase().includes(searchQuery) ||
-        recipe.description?.toLowerCase().includes(searchQuery) ||
-        recipe.tags?.some((tag) => tag.toLowerCase().includes(searchQuery)) ||
-        recipe.cuisine_type?.toLowerCase().includes(searchQuery)
+        recipe.title.toLowerCase().includes(searchQueryLower) ||
+        recipe.description?.toLowerCase().includes(searchQueryLower) ||
+        recipe.tags?.some((tag: string) => tag.toLowerCase().includes(searchQueryLower)) ||
+        recipe.cuisine_type?.toLowerCase().includes(searchQueryLower)
     );
 
     setFilteredRecipes(filtered);
+    const firstPage = filtered.slice(0, RECIPES_PER_PAGE);
+    setDisplayedRecipes(firstPage);
+    setPage(1);
+    setHasMore(filtered.length > RECIPES_PER_PAGE);
   };
 
   if (loading) {
@@ -150,13 +222,13 @@ export default function Home() {
         {searchQuery.trim() && (
           <div className="text-center mb-8">
             <p className="text-gray-600">
-              Showing {filteredRecipes.length} daripada {recipes.length} resepi
+              Showing {filteredRecipes.length} daripada {allRecipes.length} resepi
             </p>
           </div>
         )}
 
         {/* No Results */}
-        {filteredRecipes.length === 0 && recipes.length > 0 && (
+        {filteredRecipes.length === 0 && allRecipes.length > 0 && (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
               <svg
@@ -183,7 +255,7 @@ export default function Home() {
         )}
 
         {/* No Recipes at all */}
-        {recipes.length === 0 && (
+        {allRecipes.length === 0 && (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
               <svg
@@ -211,12 +283,29 @@ export default function Home() {
         )}
 
         {/* Recipe Grid */}
-        {filteredRecipes.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
-            {filteredRecipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))}
-          </div>
+        {displayedRecipes.length > 0 && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+              {displayedRecipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
+            </div>
+
+            {/* Loading More Indicator */}
+            <div ref={loadMoreRef} className="py-8">
+              {loadingMore && (
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                  <p className="mt-2 text-gray-600">Loading more resepi...</p>
+                </div>
+              )}
+              {!hasMore && displayedRecipes.length > 0 && (
+                <div className="text-center">
+                  <p className="text-gray-500">Itu sahaja! Semua resepi telah dipaparkan.</p>
+                </div>
+              )}
+            </div>
+          </>
         )}
       </div>
     </div>
