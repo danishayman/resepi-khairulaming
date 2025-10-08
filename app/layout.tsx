@@ -16,7 +16,29 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Resepi Khairul Aming",
-  description: "Koleksi resepi masakan Malaysia dari Khairul Aming",
+  description: "Koleksi resepi masakan dari Khairul Aming",
+  openGraph: {
+    title: "Resepi Khairul Aming",
+    description: "Koleksi resepi masakan dari Khairul Aming",
+    url: "https://www.resepika.my",
+    siteName: "Resepi Khairul Aming",
+    images: [
+      {
+        url: "/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Resepi Khairul Aming",
+      },
+    ],
+    locale: "ms_MY",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Resepi Khairul Aming",
+    description: "Koleksi resepi masakan Malaysia dari Khairul Aming",
+    images: ["/preview.png"],
+  },
   other: {
     "apple-mobile-web-app-title": "Resepi KA",
   },
