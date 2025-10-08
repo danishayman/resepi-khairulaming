@@ -186,9 +186,6 @@ export default function Home() {
 
   return (
     <div>
-      {/* Floating Search Bar */}
-      <FloatingSearch onSearch={handleSearch} />
-
       {/* Banner Section */}
       <div className="w-full h-48 md:h-56 lg:h-64 relative overflow-hidden">
         <Image
@@ -214,16 +211,20 @@ export default function Home() {
               @Khairulaming
             </a>
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Hey what's up guys!
           </p>
+
+          <div className="mb-8">
+            <FloatingSearch onSearch={handleSearch} placeholder="Cari resepi..." />
+          </div>
         </div>
 
         {/* Recipe Stats - Only show when user is searching */}
         {searchQuery.trim() && (
           <div className="text-center mb-8">
             <p className="text-gray-600">
-              Menunjukkan {filteredRecipes.length} daripada {allRecipes.length} resepi
+              Showing {filteredRecipes.length} daripada {allRecipes.length} resepi
             </p>
           </div>
         )}
