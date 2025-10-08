@@ -170,7 +170,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading resepi...</p>
+          <p className="mt-4 text-gray-600">Memuatkan resepi...</p>
         </div>
       </div>
     );
@@ -248,7 +248,7 @@ export default function Home() {
         {searchQuery.trim() && (
           <div className="text-center mb-8">
             <p className="text-gray-600">
-              Showing {filteredRecipes.length} daripada {allRecipes.length} resepi
+              Menunjukkan {filteredRecipes.length} daripada {allRecipes.length} resepi
             </p>
           </div>
         )}
@@ -322,7 +322,7 @@ export default function Home() {
               {loadingMore && (
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                  <p className="mt-2 text-gray-600">Loading more resepi...</p>
+                  <p className="mt-2 text-gray-600">Memuatkan resepi...</p>
                 </div>
               )}
               {!hasMore && displayedRecipes.length > 0 && (
