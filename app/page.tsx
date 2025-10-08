@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { Recipe } from "@/lib/types";
 import { shuffleArray } from "@/lib/utils";
+import { recipeCache } from "@/lib/cache";
 import FloatingSearch from "@/components/FloatingSearch";
 import RecipeCard from "@/components/RecipeCard";
 import Image from "next/image";
@@ -30,15 +31,38 @@ export default function Home() {
   const fetchRecipes = async () => {
     try {
       setLoading(true);
+      
+      // Try to get from cache first
+      const cachedRecipes = recipeCache.get();
+      
+      if (cachedRecipes && cachedRecipes.length > 0) {
+        // Use cached data
+        console.log('Using cached recipes');
+        setTimeout(() => {
+          const shuffledRecipes = shuffleArray([...cachedRecipes]);
+          setAllRecipes(shuffledRecipes);
+          setFilteredRecipes(shuffledRecipes);
+          
+          const firstPage = shuffledRecipes.slice(0, RECIPES_PER_PAGE);
+          setDisplayedRecipes(firstPage);
+          setHasMore(shuffledRecipes.length > RECIPES_PER_PAGE);
+          setLoading(false);
+        }, 0);
+        return;
+      }
+
+      // Fetch from Supabase if no cache
+      console.log('Fetching recipes from Supabase');
       const { data, error } = await supabase.from("recipes").select("*");
 
       if (error) {
         throw error;
       }
 
-      // Only shuffle the recipes on the client side after initial render
-      // This prevents hydration mismatches
       const rawData = data || [];
+      
+      // Save to cache
+      recipeCache.set(rawData);
       
       // Apply shuffling in a separate effect after hydration is complete
       setTimeout(() => {
@@ -212,7 +236,7 @@ export default function Home() {
             </a>
           </h1>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Hey what's up guys!
+            Hey what&apos;s up guys!
           </p>
 
           <div className="mb-8">
