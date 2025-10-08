@@ -11,9 +11,14 @@ export default function FloatingSearch({ onSearch, placeholder = "Cari resepi...
     const [query, setQuery] = useState('')
     const [isSticky, setIsSticky] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
     const [searchHeight, setSearchHeight] = useState(0)
+    const [isMac, setIsMac] = useState(false)
 
     useEffect(() => {
+        // Detect if user is on Mac
+        setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0)
+        
         const handleScroll = () => {
             if (containerRef.current) {
                 const rect = containerRef.current.getBoundingClientRect()
@@ -31,6 +36,21 @@ export default function FloatingSearch({ onSearch, placeholder = "Cari resepi...
         handleScroll() // Check initial position
         
         return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    // Keyboard shortcut handler for Ctrl+K / Cmd+K
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Check for Ctrl+K (Windows/Linux) or Cmd+K (Mac)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault()
+                inputRef.current?.focus()
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+        
+        return () => window.removeEventListener('keydown', handleKeyDown)
     }, [])
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -76,12 +96,19 @@ export default function FloatingSearch({ onSearch, placeholder = "Cari resepi...
                                 </svg>
                             </div>
                             <input
+                                ref={inputRef}
                                 type="text"
                                 value={query}
                                 onChange={handleChange}
                                 placeholder={placeholder}
-                                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                className="block w-full pl-10 pr-20 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                             />
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold text-gray-500 bg-gray-100 border border-gray-300 rounded">
+                                    <span className="text-xs">{isMac ? '⌘' : 'Ctrl'}</span>
+                                    <span>K</span>
+                                </kbd>
+                            </div>
                         </div>
                     </form>
                 </div>
