@@ -1,0 +1,61 @@
+# robots.txt for Resepi Khairul Aming
+# Website: https://www.resepika.my
+
+User-agent: *
+Allow: /
+
+# Allow all main content
+Allow: /resepi/
+
+# Allow static assets
+Allow: /banner.png
+Allow: /preview.png
+Allow: /thumbnails/
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.png
+Allow: /*.svg
+Allow: /*.webp
+
+# Allow manifest and icons for PWA functionality
+Allow: /manifest.json
+Allow: /apple-icon.png
+Allow: /favicon.ico
+Allow: /web-app-manifest-*.png
+
+# Block potential sensitive files/directories
+Disallow: /api/
+Disallow: /_next/static/chunks/
+Disallow: /*.json$
+Disallow: /scripts/
+Disallow: /SQL/
+
+# Block common crawl traps and unnecessary paths
+Disallow: /*?*
+Disallow: /*&*
+Disallow: /search
+Disallow: /404
+Disallow: /500
+
+# Common bot restrictions
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+# Block unwanted bots
+User-agent: SemrushBot-SA
+Disallow: /
+
+User-agent: AhrefsSiteAudit
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://www.resepika.my/sitemap.xml
