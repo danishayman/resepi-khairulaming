@@ -9,7 +9,7 @@ import FloatingSearch from "@/components/FloatingSearch";
 import RecipeCard from "@/components/RecipeCard";
 import Image from "next/image";
 
-const RECIPES_PER_PAGE = 12;
+const RECIPES_PER_PAGE = 15;
 
 export default function Home() {
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
