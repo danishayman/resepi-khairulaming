@@ -15,10 +15,10 @@ export default function DarkModeToggle() {
   if (!mounted) {
     return (
       <button
-        className="relative inline-flex h-10 w-20 items-center rounded-full bg-gray-300 dark:bg-gray-700 transition-colors"
+        className="relative inline-flex h-8 w-16 md:h-10 md:w-20 items-center rounded-full bg-gray-300 dark:bg-gray-700 transition-colors"
         aria-label="Toggle theme"
       >
-        <span className="inline-block h-8 w-8 transform rounded-full bg-white shadow-lg transition-transform" />
+        <span className="inline-block h-6 w-6 md:h-8 md:w-8 transform rounded-full bg-white shadow-lg transition-transform" />
       </button>
     );
   }
@@ -28,7 +28,7 @@ export default function DarkModeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className={`relative inline-flex h-10 w-20 items-center rounded-full transition-colors duration-300 focus:outline-none ${
+      className={`relative inline-flex h-8 w-16 md:h-10 md:w-20 items-center rounded-full transition-colors duration-300 focus:outline-none ${
         isDark ? "bg-gray-700" : "bg-gray-300"
       }`}
       aria-label="Toggle theme"
@@ -36,14 +36,14 @@ export default function DarkModeToggle() {
       aria-checked={isDark}
     >
       <span
-        className={`inline-flex h-8 w-8 items-center justify-center transform rounded-full bg-white shadow-lg transition-transform duration-300 ${
-          isDark ? "translate-x-10" : "translate-x-1"
+        className={`inline-flex h-6 w-6 md:h-8 md:w-8 items-center justify-center transform rounded-full bg-white shadow-lg transition-transform duration-300 ${
+          isDark ? "translate-x-8 md:translate-x-10" : "translate-x-1"
         }`}
       >
         {isDark ? (
           // Moon icon for dark mode
           <svg
-            className="w-5 h-5 text-gray-700"
+            className="w-4 h-4 md:w-5 md:h-5 text-gray-700"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -52,7 +52,7 @@ export default function DarkModeToggle() {
         ) : (
           // Sun icon for light mode
           <svg
-            className="w-5 h-5 text-yellow-500"
+            className="w-4 h-4 md:w-5 md:h-5 text-yellow-500"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
