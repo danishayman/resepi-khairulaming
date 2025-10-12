@@ -7,7 +7,6 @@ import { shuffleArray } from "@/lib/utils";
 import { recipeCache } from "@/lib/cache";
 import FloatingSearch from "@/components/FloatingSearch";
 import RecipeCard from "@/components/RecipeCard";
-import DarkModeToggle from "@/components/DarkModeToggle";
 import Image from "next/image";
 
 const RECIPES_PER_PAGE = 15;
@@ -268,10 +267,6 @@ export default function Home() {
           className="object-cover object-bottom"
           priority
         />
-        {/* Dark Mode Toggle - Positioned on banner */}
-        <div className="absolute top-4 right-4 z-10">
-          <DarkModeToggle />
-        </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
