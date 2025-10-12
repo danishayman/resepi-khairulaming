@@ -70,7 +70,7 @@ export default function RootLayout({
               href="https://danishaiman.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-gray-900 dark:bg-gray-700 text-white text-xs px-3 py-2 rounded-full shadow-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center gap-1"
+              className="bg-gray-900 dark:bg-white text-white dark:text-black text-xs px-3 py-2 rounded-full shadow-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors duration-200 flex items-center gap-1"
             >
               <span>Created by</span>
               <span className="font-medium underline">@danishayman</span>
