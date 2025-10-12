@@ -70,7 +70,7 @@ export default function RootLayout({
           <Analytics />
 
           {/* Fixed credit at bottom right */}
-          <div className="fixed bottom-1 right-1 z-50">
+          <div className="fixed bottom-2 right-6 z-50">
             <a 
               href="https://danishaiman.com" 
               target="_blank" 
