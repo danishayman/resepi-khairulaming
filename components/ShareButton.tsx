@@ -94,8 +94,8 @@ export default function ShareButton({
                 <button
                     onClick={handleCopyLink}
                     className={`flex items-center justify-center px-3 py-2 sm:px-4 rounded-lg border transition-all duration-200 text-sm ${copied
-                            ? "bg-green-50 border-green-300 text-green-700"
-                            : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
+                            ? "bg-green-50 dark:bg-green-900 border-green-300 dark:border-green-700 text-green-700 dark:text-green-200"
+                            : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                         }`}
                     title="Copy Link"
                 >
@@ -140,7 +140,7 @@ export default function ShareButton({
                 {/* Share Button */}
                 <button
                     onClick={handleNativeShare}
-                    className="flex items-center justify-center px-3 py-2 sm:px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    className="flex items-center justify-center px-3 py-2 sm:px-4 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm"
                     title="Share Resepi"
                 >
                     <svg
@@ -164,17 +164,17 @@ export default function ShareButton({
             {showShareMenu && (
                 <>
                     <div
-                        className="fixed inset-0 bg-black bg-opacity-25 z-40"
+                        className="fixed inset-0 bg-black bg-opacity-25 dark:bg-opacity-50 z-40"
                         onClick={() => setShowShareMenu(false)}
                     />
-                    <div className="absolute top-full left-0 sm:right-0 sm:left-auto mt-2 w-full sm:w-48 bg-white rounded-lg shadow-lg border z-50">
+                    <div className="absolute top-full left-0 sm:right-0 sm:left-auto mt-2 w-full sm:w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
                         <div className="p-2">
-                            <div className="text-sm font-medium text-gray-900 mb-2 px-3 py-2">
+                            <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2 px-3 py-2">
                                 Share to:
                             </div>
                             <button
                                 onClick={shareOnWhatsApp}
-                                className="w-full flex items-center px-3 py-3 sm:py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded transition-colors"
+                                className="w-full flex items-center px-3 py-3 sm:py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-900 hover:text-green-700 dark:hover:text-green-200 rounded transition-colors"
                             >
                                 <svg
                                     className="w-5 h-5 sm:w-4 sm:h-4 mr-3"
@@ -187,7 +187,7 @@ export default function ShareButton({
                             </button>
                             <button
                                 onClick={shareOnFacebook}
-                                className="w-full flex items-center px-3 py-3 sm:py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded transition-colors"
+                                className="w-full flex items-center px-3 py-3 sm:py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-200 rounded transition-colors"
                             >
                                 <svg
                                     className="w-5 h-5 sm:w-4 sm:h-4 mr-3"
@@ -200,7 +200,7 @@ export default function ShareButton({
                             </button>
                             <button
                                 onClick={shareOnTwitter}
-                                className="w-full flex items-center px-3 py-3 sm:py-2 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-700 rounded transition-colors"
+                                className="w-full flex items-center px-3 py-3 sm:py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-sky-50 dark:hover:bg-sky-900 hover:text-sky-700 dark:hover:text-sky-200 rounded transition-colors"
                             >
                                 <svg
                                     className="w-5 h-5 sm:w-4 sm:h-4 mr-3"
@@ -213,7 +213,7 @@ export default function ShareButton({
                             </button>
                             <button
                                 onClick={shareOnTelegram}
-                                className="w-full flex items-center px-3 py-3 sm:py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-700 rounded transition-colors"
+                                className="w-full flex items-center px-3 py-3 sm:py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-cyan-50 dark:hover:bg-cyan-900 hover:text-cyan-700 dark:hover:text-cyan-200 rounded transition-colors"
                             >
                                 <svg
                                     className="w-5 h-5 sm:w-4 sm:h-4 mr-3"

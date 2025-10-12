@@ -81,8 +81,8 @@ function renderIngredients(ingredients: IngredientsData) {
       <ul className="space-y-2">
         {ingredients.map((ingredient, index) => (
           <li key={index} className="flex items-start">
-            <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-            <span className="text-gray-700">
+            <span className="inline-block w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+            <span className="text-gray-700 dark:text-gray-300">
               {typeof ingredient === 'string' 
                 ? ingredient 
                 : ingredient.name 
@@ -99,14 +99,14 @@ function renderIngredients(ingredients: IngredientsData) {
       <div className="space-y-6">
         {Object.entries(ingredients).map(([category, items]) => (
           <div key={category}>
-            <h3 className="text-lg font-semibold text-gray-800 mb-3 capitalize">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3 capitalize">
               {getCategoryDisplayName(category)}
             </h3>
             <ul className="space-y-2 ml-4">
               {Array.isArray(items) && items.map((ingredient: IngredientItem, index: number) => (
                 <li key={index} className="flex items-start">
-                  <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                  <span className="text-gray-700">
+                  <span className="inline-block w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span className="text-gray-700 dark:text-gray-300">
                     {typeof ingredient === 'string' 
                       ? ingredient 
                       : ingredient.name 
@@ -123,9 +123,9 @@ function renderIngredients(ingredients: IngredientsData) {
   } else {
     // Fallback for unexpected structure
     return (
-      <div className="text-gray-600">
+      <div className="text-gray-600 dark:text-gray-400">
         <p>Bahan-bahan tidak dapat dipaparkan dalam format yang betul.</p>
-        <pre className="mt-2 text-xs bg-gray-100 p-2 rounded">
+        <pre className="mt-2 text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded">
           {JSON.stringify(ingredients, null, 2)}
         </pre>
       </div>
@@ -141,10 +141,10 @@ function renderInstructions(instructions: InstructionsData) {
       <ol className="space-y-4">
         {instructions.map((instruction, index) => (
           <li key={index} className="flex items-start">
-            <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
+            <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 dark:bg-blue-500 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
               {index + 1}
             </span>
-            <div className="text-gray-700 leading-relaxed">
+            <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
               {typeof instruction === 'string' 
                 ? instruction 
                 : instruction.text || instruction.step || JSON.stringify(instruction)}
@@ -172,10 +172,10 @@ function renderInstructions(instructions: InstructionsData) {
         <ol className="space-y-4">
           {sortedSteps.map((stepKey, index) => (
             <li key={stepKey} className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
+              <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 dark:bg-blue-500 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
                 {index + 1}
               </span>
-              <div className="text-gray-700 leading-relaxed">
+              <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
                 {typeof instructions[stepKey] === 'string' 
                   ? instructions[stepKey] 
                   : JSON.stringify(instructions[stepKey])}
@@ -190,16 +190,16 @@ function renderInstructions(instructions: InstructionsData) {
         <div className="space-y-6">
           {Object.entries(instructions).map(([category, steps]) => (
             <div key={category}>
-              <h3 className="text-lg font-semibold text-gray-800 mb-3 capitalize">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3 capitalize">
                 {category.replace(/_/g, ' ')}
               </h3>
               <ol className="space-y-4 ml-4">
                 {Array.isArray(steps) && steps.map((instruction: InstructionItem, index: number) => (
                   <li key={index} className="flex items-start">
-                    <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
+                    <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 dark:bg-blue-500 text-white rounded-full text-sm font-medium mr-4 flex-shrink-0 mt-0.5">
                       {index + 1}
                     </span>
-                    <div className="text-gray-700 leading-relaxed">
+                    <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
                       {typeof instruction === 'string' 
                         ? instruction 
                         : instruction.text || instruction.step || JSON.stringify(instruction)}
@@ -215,9 +215,9 @@ function renderInstructions(instructions: InstructionsData) {
   } else {
     // Fallback for unexpected structure
     return (
-      <div className="text-gray-600">
+      <div className="text-gray-600 dark:text-gray-400">
         <p>Cara masakan tidak dapat dipaparkan dalam format yang betul.</p>
-        <pre className="mt-2 text-xs bg-gray-100 p-2 rounded">
+        <pre className="mt-2 text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded">
           {JSON.stringify(instructions, null, 2)}
         </pre>
       </div>
@@ -242,7 +242,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
       <div className="mb-6">
         <Link 
           href="/"
-          className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+          className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
         >
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -253,32 +253,32 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
       {/* Recipe Header */}
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
           {recipe.title}
         </h1>
         
         {recipe.description && (
-          <p className="text-lg text-gray-600 mb-6">
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
             {recipe.description}
           </p>
         )}
 
         {/* Recipe Meta */}
-        <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
+        <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 mb-6">
           {recipe.difficulty_level && (
             <span className={`px-3 py-1 rounded-full font-medium ${
               recipe.difficulty_level.toLowerCase() === 'mudah' 
-                ? 'bg-green-100 text-green-800'
+                ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
                 : recipe.difficulty_level.toLowerCase() === 'sederhana'
-                ? 'bg-yellow-100 text-yellow-800'
-                : 'bg-red-100 text-red-800'
+                ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
+                : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
             }`}>
               {recipe.difficulty_level}
             </span>
           )}
           
           {recipe.cuisine_type && (
-            <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full">
+            <span className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">
               {recipe.cuisine_type}
             </span>
           )}
@@ -287,48 +287,48 @@ export default async function RecipePage({ params }: RecipePageProps) {
         {/* Time and Servings */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {recipe.prep_time_minutes && (
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-600 mb-1">
+            <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1">
                 {formatTime(recipe.prep_time_minutes)}
               </div>
-              <div className="text-sm text-gray-600">Masa Persediaan</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Masa Persediaan</div>
             </div>
           )}
           
           {recipe.cook_time_minutes && (
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-2xl font-bold text-orange-600 mb-1">
+            <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400 mb-1">
                 {formatTime(recipe.cook_time_minutes)}
               </div>
-              <div className="text-sm text-gray-600">Masa Masakan</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Masa Masakan</div>
             </div>
           )}
           
           {recipe.total_time_minutes && (
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-2xl font-bold text-green-600 mb-1">
+            <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-1">
                 {formatTime(recipe.total_time_minutes)}
               </div>
-              <div className="text-sm text-gray-600">Jumlah Masa</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Jumlah Masa</div>
             </div>
           )}
           
           {recipe.servings && (
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-2xl font-bold text-purple-600 mb-1">
+            <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-1">
                 {recipe.servings}
               </div>
-              <div className="text-sm text-gray-600">Hidangan</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Hidangan</div>
             </div>
           )}
         </div>
 
         {/* Share Section */}
-        <div className="mb-8 bg-gray-50 rounded-lg p-4">
+        <div className="mb-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Share Resepi ni!</h3>
-              <p className="text-sm text-gray-600">Kongsi dengan rakan-rakan dan keluarga</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">Share Resepi ni!</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Kongsi dengan rakan-rakan dan keluarga</p>
             </div>
             <div className="flex-shrink-0">
               <ShareButton 
@@ -348,16 +348,16 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
           {/* Ingredients */}
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Bahan-bahan</h2>
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Bahan-bahan</h2>
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
               {renderIngredients(recipe.ingredients)}
             </div>
           </div>
 
           {/* Instructions */}
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Cara Masakan</h2>
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Cara Masakan</h2>
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
               {renderInstructions(recipe.instructions)}
             </div>
           </div>
@@ -365,13 +365,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
           {/* Nutrition Info */}
           {recipe.nutrition_info && (
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Maklumat Pemakanan</h2>
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Maklumat Pemakanan</h2>
+              <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {Object.entries(recipe.nutrition_info as Record<string, string | number>).map(([key, value]) => (
-                    <div key={key} className="text-center p-3 bg-gray-50 rounded-lg">
-                      <div className="text-lg font-semibold text-gray-900">{value}</div>
-                      <div className="text-sm text-gray-600 capitalize">{key.replace('_', ' ')}</div>
+                    <div key={key} className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">{value}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">{key.replace('_', ' ')}</div>
                     </div>
                   ))}
                 </div>
@@ -384,19 +384,19 @@ export default async function RecipePage({ params }: RecipePageProps) {
         <div className="space-y-6">
           {/* TikTok Video */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Video Resepi</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Video Resepi</h3>
             <TikTokEmbed sourceUrl={recipe.source_url} title={recipe.title} />
           </div>
 
           {/* Tags */}
           {recipe.tags && recipe.tags.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Tag</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Tag</h3>
               <div className="flex flex-wrap gap-2">
                 {recipe.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full"
+                    className="inline-block px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full"
                   >
                     #{tag}
                   </span>
@@ -411,7 +411,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
               href={recipe.source_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+              className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
