@@ -13,7 +13,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
 
   return (
     <Link href={`/resepi/${slug}`} className="group block w-80 h-96 mx-auto">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 h-full flex flex-col">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 h-full flex flex-col">
         <div className="h-70 relative overflow-hidden flex-shrink-0">
           {thumbnailUrl ? (
             <Image
@@ -24,9 +24,9 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
-            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
               <svg
-                className="w-12 h-12 text-gray-400"
+                className="w-12 h-12 text-gray-400 dark:text-gray-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -43,11 +43,11 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
         </div>
         
         <div className="p-4 flex-1 flex flex-col min-h-0">
-          <h3 className="font-semibold text-base text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <h3 className="font-semibold text-base text-gray-900 dark:text-gray-100 mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
             {recipe.title}
           </h3>
           
-          <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-3">
             <div className="flex items-center space-x-4">
               {recipe.total_time_minutes && (
                 <span className="flex items-center">
@@ -71,10 +71,10 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
             {recipe.difficulty_level && (
               <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                 recipe.difficulty_level.toLowerCase() === 'mudah' 
-                  ? 'bg-green-100 text-green-800'
+                  ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
                   : recipe.difficulty_level.toLowerCase() === 'sederhana'
-                  ? 'bg-yellow-100 text-yellow-800'
-                  : 'bg-red-100 text-red-800'
+                  ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
+                  : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
               }`}>
                 {recipe.difficulty_level}
               </span>
@@ -86,7 +86,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
               {recipe.tags.slice(0, 3).map((tag, index) => (
                 <span
                   key={index}
-                  className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full"
+                  className="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full"
                 >
                   #{tag}
                 </span>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import "./globals.css";
 
 
@@ -50,31 +51,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ms">
+    <html lang="ms" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
       >
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <footer className="bg-gray-50 border-t border-gray-200">
+        <ThemeProvider>
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <footer className="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
 
-        </footer>
-        <Analytics />
+          </footer>
+          <Analytics />
 
-        {/* Fixed credit at bottom right */}
-        <div className="fixed bottom-1 right-1 z-50">
-          <a 
-            href="https://danishaiman.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="bg-gray-900 text-white text-xs px-3 py-2 rounded-full shadow-lg hover:bg-gray-800 transition-colors duration-200 flex items-center gap-1"
-          >
-            <span>Created by</span>
-            <span className="font-medium underline">@danishayman</span>
-          </a>
-        </div>
-
+          {/* Fixed credit at bottom right */}
+          <div className="fixed bottom-1 right-1 z-50">
+            <a 
+              href="https://danishaiman.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-gray-900 dark:bg-gray-700 text-white text-xs px-3 py-2 rounded-full shadow-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center gap-1"
+            >
+              <span>Created by</span>
+              <span className="font-medium underline">@danishayman</span>
+            </a>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -82,7 +82,7 @@ export default function FloatingSearch({ onSearch, placeholder = "Cari resepi...
                         <div className="relative shadow-lg">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg
-                                    className="h-5 w-5 text-gray-400"
+                                    className="h-5 w-5 text-gray-400 dark:text-gray-500"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -101,10 +101,10 @@ export default function FloatingSearch({ onSearch, placeholder = "Cari resepi...
                                 value={query}
                                 onChange={handleChange}
                                 placeholder={placeholder}
-                                className="block w-full pl-10 pr-20 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                className="block w-full pl-10 pr-20 py-2 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:placeholder-gray-400 dark:focus:placeholder-gray-500 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400"
                             />
                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold text-gray-500 bg-gray-100 border border-gray-300 rounded">
+                                <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded">
                                     <span className="text-xs">{isMac ? '⌘' : 'Ctrl'}</span>
                                     <span>K</span>
                                 </kbd>

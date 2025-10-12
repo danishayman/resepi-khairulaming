@@ -7,6 +7,7 @@ import { shuffleArray } from "@/lib/utils";
 import { recipeCache } from "@/lib/cache";
 import FloatingSearch from "@/components/FloatingSearch";
 import RecipeCard from "@/components/RecipeCard";
+import DarkModeToggle from "@/components/DarkModeToggle";
 import Image from "next/image";
 
 const RECIPES_PER_PAGE = 15;
@@ -169,17 +170,17 @@ export default function Home() {
     return (
       <div className="animate-pulse">
         {/* Banner Skeleton */}
-        <div className="w-full h-48 md:h-56 lg:h-64 bg-gray-200"></div>
+        <div className="w-full h-48 md:h-56 lg:h-64 bg-gray-200 dark:bg-gray-700"></div>
 
         <div className="container mx-auto px-4 py-8">
           {/* Header Section Skeleton */}
           <div className="text-center mb-8">
-            <div className="h-10 bg-gray-200 rounded w-96 mx-auto mb-4"></div>
-            <div className="h-6 bg-gray-200 rounded w-64 mx-auto mb-8"></div>
+            <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-96 mx-auto mb-4"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-64 mx-auto mb-8"></div>
 
             {/* Search Bar Skeleton */}
             <div className="max-w-2xl mx-auto mb-8">
-              <div className="h-12 bg-gray-200 rounded-lg"></div>
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
             </div>
           </div>
 
@@ -187,32 +188,32 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
             {[...Array(RECIPES_PER_PAGE)].map((_, index) => (
               <div key={index} className="w-80 h-96 mx-auto">
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden h-full flex flex-col">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
                   {/* Image Skeleton */}
-                  <div className="h-70 bg-gray-200 flex-shrink-0"></div>
+                  <div className="h-70 bg-gray-200 dark:bg-gray-700 flex-shrink-0"></div>
                   
                   {/* Content Skeleton */}
                   <div className="p-4 flex-1 flex flex-col min-h-0">
                     {/* Title */}
                     <div className="space-y-2 mb-3">
-                      <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
                     </div>
                     
                     {/* Meta Info */}
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-4">
-                        <div className="h-4 bg-gray-200 rounded w-16"></div>
-                        <div className="h-4 bg-gray-200 rounded w-12"></div>
+                        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-16"></div>
+                        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-12"></div>
                       </div>
-                      <div className="h-6 bg-gray-200 rounded-full w-20"></div>
+                      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20"></div>
                     </div>
                     
                     {/* Tags */}
                     <div className="mt-auto flex flex-wrap gap-1">
-                      <div className="h-6 bg-gray-200 rounded-full w-16"></div>
-                      <div className="h-6 bg-gray-200 rounded-full w-20"></div>
-                      <div className="h-6 bg-gray-200 rounded-full w-14"></div>
+                      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16"></div>
+                      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20"></div>
+                      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-14"></div>
                     </div>
                   </div>
                 </div>
@@ -228,7 +229,7 @@ export default function Home() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <div className="text-red-600 mb-4">
+          <div className="text-red-600 dark:text-red-400 mb-4">
             <svg
               className="w-12 h-12 mx-auto"
               fill="none"
@@ -243,11 +244,11 @@ export default function Home() {
               />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Ralat</h2>
-          <p className="text-gray-600 mb-4">{error}</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Ralat</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{error}</p>
           <button
             onClick={fetchRecipes}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
           >
             Cuba Lagi
           </button>
@@ -267,12 +268,16 @@ export default function Home() {
           className="object-cover object-bottom"
           priority
         />
+        {/* Dark Mode Toggle - Positioned on banner */}
+        <div className="absolute top-4 right-4 z-10">
+          <DarkModeToggle />
+        </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
             Koleksi Resepi{" "}
             <a
               href="https://www.tiktok.com/@khairulaming"
@@ -283,7 +288,7 @@ export default function Home() {
               @Khairulaming
             </a>
           </h1>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
             Hey what&apos;s up guys!
           </p>
 
@@ -295,7 +300,7 @@ export default function Home() {
         {/* Recipe Stats - Only show when user is searching */}
         {searchQuery.trim() && (
           <div className="text-center mb-8">
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               Menunjukkan {filteredRecipes.length} daripada {allRecipes.length} resepi
             </p>
           </div>
@@ -304,7 +309,7 @@ export default function Home() {
         {/* No Results */}
         {filteredRecipes.length === 0 && allRecipes.length > 0 && (
           <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
+            <div className="text-gray-400 dark:text-gray-500 mb-4">
               <svg
                 className="w-12 h-12 mx-auto"
                 fill="none"
@@ -319,10 +324,10 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
               Tiada resepi dijumpai
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               Cuba cari dengan kata kunci yang berbeza
             </p>
           </div>
@@ -331,7 +336,7 @@ export default function Home() {
         {/* No Recipes at all */}
         {allRecipes.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
+            <div className="text-gray-400 dark:text-gray-500 mb-4">
               <svg
                 className="w-12 h-12 mx-auto"
                 fill="none"
@@ -346,10 +351,10 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
               Belum ada resepi
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               Resepi akan dipaparkan di sini setelah ditambah ke dalam pangkalan
               data
             </p>
@@ -369,13 +374,13 @@ export default function Home() {
             <div ref={loadMoreRef} className="py-8">
               {loadingMore && (
                 <div className="text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                  <p className="mt-2 text-gray-600">Memuatkan resepi...</p>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400 mx-auto"></div>
+                  <p className="mt-2 text-gray-600 dark:text-gray-400">Memuatkan resepi...</p>
                 </div>
               )}
               {!hasMore && displayedRecipes.length > 0 && (
                 <div className="text-center">
-                  <p className="text-gray-500">Itu sahaja! Semua resepi telah dipaparkan.</p>
+                  <p className="text-gray-500 dark:text-gray-400">Itu sahaja! Semua resepi telah dipaparkan.</p>
                 </div>
               )}
             </div>
