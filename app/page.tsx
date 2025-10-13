@@ -280,7 +280,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="hover:underline transition-all duration-200"
             >
-              @Khairulaming
+              @KhairulAming
             </a>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
