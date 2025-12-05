@@ -2,7 +2,7 @@ const { createClient } = require('@supabase/supabase-js');
 
 async function pingSupabase() {
   try {
-    console.log('🏃 Starting Supabase ping...');
+    console.log('Starting Supabase ping...');
     
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -21,15 +21,15 @@ async function pingSupabase() {
       .limit(1);
     
     if (error) {
-      console.error('❌ Error pinging Supabase:', error.message);
+      console.error('Error pinging Supabase:', error.message);
       process.exit(1);
     }
     
-    console.log('✅ Successfully pinged Supabase database');
-    console.log(`🕐 Timestamp: ${new Date().toISOString()}`);
+    console.log('Successfully pinged Supabase database');
+    console.log(`Timestamp: ${new Date().toISOString()}`);
     
   } catch (error) {
-    console.error('❌ Failed to ping Supabase:', error.message);
+    console.error('Failed to ping Supabase:', error.message);
     process.exit(1);
   }
 }
